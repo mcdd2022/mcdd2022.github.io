@@ -5,18 +5,22 @@ project:
 # ~ additional metadata excluded for brevity ~
 
 website:
-  title: "mcdd2022.github.io"
+  title: "Mayra Coruh"
   navbar:
     left:
       - href: index.qmd
         text: Home
       - about.qmd
+      - resources.qmd
 
 format:
   html:
-    theme: cosmo
+    theme:
+      light: minty
+      dark: solar
     css: styles.css
     toc: true
+    page-layout: full
 
 editor: visual
 
