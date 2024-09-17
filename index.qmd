@@ -1,11 +1,21 @@
 ---
-title: "mcdd2022.github.io"
+title: "Mayra Coruh"
+image: Istanbul.jpg
+toc: false
+about: 
+  template: jolla
+  image-shape: round
+  image-width: 17em
+  links:
+    - text: LinkedIn
+      href: https://www.linkedin.com/in/mayra-coruh-b2a641260/
+    - text: GitHub
+      href: https://github.com/mcdd2022/mcdd2022.github.io
+    - text: Email
+      href: mcdd2022@mymail.pomona.edu
 ---
 
-This is a Quarto website.
+Hi! I'm Mayra. I'm from Istanbul, Turkey and I'm a junior at Pomona College, majoring in Cognitive Science, thinking of concentrating in Human-Centered Design and minoring in Data Science. I love creating things (painting, collaging, etc.), travelling, and spending quality time with my family and friends, including my dog!
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+---
 
-```{r}
-1 + 1
-```
