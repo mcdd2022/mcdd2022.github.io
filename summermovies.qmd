@@ -1,0 +1,33 @@
+---
+title: "Summer Movies"
+description: |
+  Analysis of Summer Movies data from TidyTuesday
+author: Mayra Coruh
+date: September 18, 2024
+format: html
+execute:
+  warning: false
+  message: false
+---
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+# Option 2: Read directly from GitHub
+
+summer_movie_genres <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2024/2024-07-30/summer_movie_genres.csv')
+summer_movies <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2024/2024-07-30/summer_movies.csv')
+
+```
+
+```{r}
+summer_movies %>% ggplot(aes(x = runtime_minutes, y = average_rating)) +
+  geom_point() +
+  labs(
+    x = "Runtime (minutes)",
+    y = "Average IMDb Rating",
+    title = "Distribution of IMDb Ratings by Movie Runtime"
+  )
+```

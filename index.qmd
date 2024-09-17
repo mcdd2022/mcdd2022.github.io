@@ -4,8 +4,8 @@ image: Istanbul.jpg
 toc: false
 about: 
   template: jolla
-  image-shape: round
-  image-width: 17em
+  image-shape: rectangle 
+  image-width: 20em
   links:
     - text: LinkedIn
       href: https://www.linkedin.com/in/mayra-coruh-b2a641260/

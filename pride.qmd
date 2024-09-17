@@ -1,0 +1,30 @@
+---
+title: "Pride Index"
+description: |
+  Analysis of Pride Index data from TidyTuesday
+author: Mayra Coruh
+date: September 18, 2024
+format: html
+execute:
+  warning: false
+  message: false
+---
+
+```{r}
+# Option 2: Read directly from GitHub
+
+pride_index <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2024/2024-06-11/pride_index.csv')
+pride_index_tags <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2024/2024-06-11/pride_index_tags.csv')
+
+```
+
+```{r}
+library(tidyverse)
+pride_index %>% ggplot(aes(x = community_type, y = rating)) +
+  geom_boxplot() +
+  labs(
+    x = "Community Type",
+    y = "Rating",
+    title = "Campus Pride Index Across Different Community Types",
+  )
+```
