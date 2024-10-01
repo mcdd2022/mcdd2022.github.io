@@ -15,6 +15,8 @@ website:
             href: summermovies.html
           - text: "Campus Pride Index"
             href: pride.html
+          - text: "Mini Project 2"
+            href: friendsdialogue.html
     left:
       - href: index.qmd
         text: Home
