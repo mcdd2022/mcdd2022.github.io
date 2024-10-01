@@ -33,5 +33,12 @@
     "title": "Pride Index",
     "section": "",
     "text": "# Option 2: Read directly from GitHub\n\npride_index &lt;- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2024/2024-06-11/pride_index.csv')\npride_index_tags &lt;- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2024/2024-06-11/pride_index_tags.csv')\n\n\nlibrary(tidyverse)\npride_index %&gt;% ggplot(aes(x = community_type, y = rating)) +\n  geom_boxplot() +\n  labs(\n    x = \"Community Type\",\n    y = \"Rating\",\n    title = \"Campus Pride Index Across Different Community Types\",\n  )"
+  },
+  {
+    "objectID": "Mini-Project 2.html",
+    "href": "Mini-Project 2.html",
+    "title": "Finding the number of times Rachel says “honey” across all seasons",
+    "section": "",
+    "text": "library(friends)\nlibrary(stringr)\ndata(friends)\n\n\nFinding the number of times Rachel says “honey” across all seasons\n\nrachel_dialogue &lt;- friends |&gt;\n  dplyr::filter(speaker == \"Rachel Green\")\n\nrachel_honey_dialogues &lt;- rachel_dialogue |&gt;\n  dplyr::filter(str_detect(text, \"a\" ))"
   }
 ]

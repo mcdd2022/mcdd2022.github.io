@@ -1,0 +1,59 @@
+---
+title: "Friends Dialogue"
+description: |
+  Analysis of Friends Dialogue
+author: Mayra Coruh
+date: Ovtober 2, 2024
+format: html
+execute:
+  warning: false
+  message: false
+---
+
+```{r}
+library(friends)
+library(stringr)
+library(tidyr)
+library(dplyr)
+library(ggplot2)
+data(friends)
+```
+
+# Finding the number of times Rachel says "honey" across all seasons
+
+```{r}
+rachel_dialogue <- friends |>
+  dplyr::filter(speaker == "Rachel Green")
+
+rachel_honey_dialogues <- rachel_dialogue |>
+  dplyr::filter(str_detect(text, "(?i)\\bhoney\\b"))
+
+rachel_honey_count <- rachel_honey_dialogues |>
+   mutate(honey_count = str_count(text, "(?i)\\bhoney\\b"))
+
+total_honey_count <- sum(rachel_honey_count$honey_count)
+total_honey_count
+```
+
+# Plot 1
+```{r}
+
+```
+
+# Description of Insights 
+
+```{r}
+
+```
+
+
+# Finding which character speaks the longest lines 
+
+```{r}
+main_characters <- c("Ross", "Rachel", "Monica", "Joey", "Chandler", "Phoebe")
+
+main_character_dialogue <- friends |>
+  
+
+```
+
