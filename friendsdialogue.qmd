@@ -44,9 +44,9 @@ ggplot(honey_by_season, aes(x = season, y = total_honey)) +
 
 ```
 
-# Description of Insights 
+# Description of Insights
 
-The histogram illustrates that the use of "honey" fluctuates significantly across seasons, with some seasons showing higher frequencies than others. Rachel's use of "honey" peaks during Season 3 with the highest number of occurrence of 40. Another peak occurs with where the number of occurrences is approximately 35. In seasons 2 and 7, there is a moderate use of the word "honey," with occurrences around 20-25, suggesting that Rachel uses "honey" consistently but less frequently in these seasons. The lowest use of "honey" is in Season 1, with less than 10 occurrences. Similarly, Rachel uses "honey" in less in later seasons. For instance, in Season 10, number of occurrences falls below 10. Overall, the plot indicates that Rachel's use of the term "honey" peaks during the middle seasons of the the show and drops off significantly in the early and final seasons. I wonder how this might relate a more nuanced analysis on the relationship between Rachel's dialogue and emotional state across seasons.  
+The histogram illustrates that the use of "honey" fluctuates significantly across seasons, with some seasons showing higher frequencies than others. Rachel's use of "honey" peaks during Season 3 with the highest number of occurrence of 40. Another peak occurs with where the number of occurrences is approximately 35. In seasons 2 and 7, there is a moderate use of the word "honey," with occurrences around 20-25, suggesting that Rachel uses "honey" consistently but less frequently in these seasons. The lowest use of "honey" is in Season 1, with less than 10 occurrences. Similarly, Rachel uses "honey" in less in later seasons. For instance, in Season 10, number of occurrences falls below 10. Overall, the plot indicates that Rachel's use of the term "honey" peaks during the middle seasons of the the show and drops off significantly in the early and final seasons. I wonder how this might relate a more nuanced analysis on the relationship between Rachel's dialogue and emotional state across seasons.
 
 # Analysis of Utterance Categories
 
@@ -74,6 +74,5 @@ summary_data |>
   labs(title = "Analysis of Utterance Categories", x = "Category", y = "Count") +
   theme_minimal()
 ```
-# Description of Insights 
 
-
+# Description of Insights
