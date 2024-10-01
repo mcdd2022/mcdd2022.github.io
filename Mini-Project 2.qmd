@@ -3,7 +3,7 @@ title: "Friends Dialogue"
 description: |
   Analysis of Friends Dialogue
 author: Mayra Coruh
-date: Ovtober 2, 2024
+date: October 2, 2024
 format: html
 execute:
   warning: false
@@ -23,37 +23,56 @@ data(friends)
 
 ```{r}
 rachel_dialogue <- friends |>
-  dplyr::filter(speaker == "Rachel Green")
+  dplyr::filter(speaker == "Rachel Green") |>
+  select(season, text)
 
-rachel_honey_dialogues <- rachel_dialogue |>
-  dplyr::filter(str_detect(text, "(?i)\\bhoney\\b"))
+rachel_honey_count <- rachel_dialogue |>
+  mutate(honey_count = str_count(text, "(?i)\\bhoney\\b"))
 
-rachel_honey_count <- rachel_honey_dialogues |>
-   mutate(honey_count = str_count(text, "(?i)\\bhoney\\b"))
+honey_by_season <- rachel_honey_count |>
+  group_by(season) |> 
+  summarise(total_honey = sum(honey_count))
 
-total_honey_count <- sum(rachel_honey_count$honey_count)
-total_honey_count
-```
-
-# Plot 1
-```{r}
+ggplot(honey_by_season, aes(x = season, y = total_honey)) +
+  geom_bar(stat = "identity", fill = "lightblue") +
+  theme_minimal() +
+  labs(
+      title = "Number of Times Rachel Says 'Honey' per Season",
+       x = "Season",
+       y = "Number of 'Honey' Occurrences"
+)
 
 ```
 
 # Description of Insights 
+The histogram illustrates that the use of "honey" fluctuates significantly across seasons, with some seasons showing higher frequencies than others.   
+
+# Analysis of Utterance Categories
 
 ```{r}
+summary_data <- friends |>
+  mutate(text_lower = str_to_lower(text),  
+        is_love = str_detect(text_lower, "\\blove\\b"),
+        is_question = str_detect(text_lower, "^(what|where|who|when|how)"),
+        has_multiple_exclamations = str_detect(text_lower, "!{2,}")
+  )
 
+summary_data |>
+  summarise(
+      love_statements = sum(is_love),
+      questions = sum(is_question),
+      multiple_exclamations = sum(has_multiple_exclamations)
+      ) |>
+  pivot_longer(cols = everything(), names_to = "category", values_to = "count")
+
+  total_data = full_join(summary_data, friends, by ="speaker") --> new fata frame that has count and category columns. the problem is that the category is not in summary_data
+
+summary_data |>
+  ggplot(aes(x = category, y = count, fill = category)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Analysis of Utterance Categories", x = "Category", y = "Count") +
+  theme_minimal()
 ```
+# Description of Insights 
 
-
-# Finding which character speaks the longest lines 
-
-```{r}
-main_characters <- c("Ross", "Rachel", "Monica", "Joey", "Chandler", "Phoebe")
-
-main_character_dialogue <- friends |>
-  
-
-```
 
