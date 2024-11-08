@@ -18,7 +18,7 @@ website:
       - text: "Mini Project 2"
         href: friendsdialogue.html
       - text:  "Mini Project 3"
-        href: LAhomes.html
+        href: Project3.html
     left:
       - href: index.qmd
         text: Home
