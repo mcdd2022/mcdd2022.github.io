@@ -7,10 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Mayra Coruh">
-<meta name="dcterms.date" content="2024-10-02">
-<meta name="description" content="Analysis of Friends Dialogue">
+<meta name="dcterms.date" content="2024-11-08">
+<meta name="description" content="Analysis of LAhomes Dataset from OpenIntro">
 
-<title>My Website - Friends Dialogue</title>
+<title>My Website - LA Homes</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -157,11 +157,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link active" href="./friendsdialogue.html" aria-current="page"> 
+    <a class="nav-link" href="./friendsdialogue.html"> 
 <span class="menu-text">Mini Project 2</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./Project3.html"> 
+    <a class="nav-link active" href="./Project3.html" aria-current="page"> 
 <span class="menu-text">Mini Project 3</span></a>
   </li>  
 </ul>
@@ -176,34 +176,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#finding-the-number-of-times-rachel-says-honey-across-all-seasons" id="toc-finding-the-number-of-times-rachel-says-honey-across-all-seasons" class="nav-link active" data-scroll-target="#finding-the-number-of-times-rachel-says-honey-across-all-seasons">Finding the number of times Rachel says “honey” across all seasons</a></li>
-  <li><a href="#description-of-insights" id="toc-description-of-insights" class="nav-link" data-scroll-target="#description-of-insights">Description of Insights</a></li>
-  <li><a href="#analysis-of-utterance-categories" id="toc-analysis-of-utterance-categories" class="nav-link" data-scroll-target="#analysis-of-utterance-categories">Analysis of Utterance Categories</a></li>
-  <li><a href="#description-of-insights-1" id="toc-description-of-insights-1" class="nav-link" data-scroll-target="#description-of-insights-1">Description of Insights</a></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
-<main class="content column-page-left" id="quarto-document-content">
+<main class="content column-page" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Friends Dialogue</h1>
+<h1 class="title">LA Homes</h1>
 </div>
 
 <div>
   <div class="description">
-    <p>Analysis of Friends Dialogue</p>
+    <p>Analysis of LAhomes Dataset from OpenIntro</p>
   </div>
 </div>
 
 
-<div class="quarto-title-meta column-page-left">
+<div class="quarto-title-meta column-page">
 
     <div>
     <div class="quarto-title-meta-heading">Author</div>
@@ -215,7 +206,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 2, 2024</p>
+      <p class="date">November 8, 2024</p>
     </div>
   </div>
   
@@ -228,88 +219,99 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(friends)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(friends)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(openintro)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="finding-the-number-of-times-rachel-says-honey-across-all-seasons" class="level1">
-<h1>Finding the number of times Rachel says “honey” across all seasons</h1>
+<p>Research Question: How do the locations of homes in Santa Monica and Long Beach affect their listing prices? Null Hypothesis: There is no significant difference in the mean listing prices of homes between Santa Monica and Long Beach.</p>
+<p>Plan:</p>
+<p>In this analysis of the LA homes dataset, I conduct a permutation test to assess whether the city in which a home is located (specifically between Santa Monica and Long Beach) has a significant effect on the listing price. I begin by filtering the data to only include homes from these two cities. I then create a function that calculates the permuted mean difference in listing prices by randomly shuffling the city labels while keeping the prices fixed. This process is repeated multiple times through the map() function to generate a distribution of permuted mean differences under the null hypothesis, which states that the mean listing prices between the two cities are the same. Then, I calculate the observed mean difference and compare it to the distribution of permuted differences to compute the p-value. Finally, I visualize the distribution of these permuted mean differences and mark the observed mean difference to assess its significance.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>rachel_dialogue <span class="ot">&lt;-</span> friends <span class="sc">|&gt;</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(speaker <span class="sc">==</span> <span class="st">"Rachel Green"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(season, text)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>rachel_honey_count <span class="ot">&lt;-</span> rachel_dialogue <span class="sc">|&gt;</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">honey_count =</span> <span class="fu">str_count</span>(text, <span class="st">"(?i)</span><span class="sc">\\</span><span class="st">bhoney</span><span class="sc">\\</span><span class="st">b"</span>))</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>honey_by_season <span class="ot">&lt;-</span> rachel_honey_count <span class="sc">|&gt;</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(season) <span class="sc">|&gt;</span> </span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">total_honey =</span> <span class="fu">sum</span>(honey_count))</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(honey_by_season, <span class="fu">aes</span>(<span class="at">x =</span> season, <span class="at">y =</span> total_honey)) <span class="sc">+</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">fill =</span> <span class="st">"lightblue"</span>) <span class="sc">+</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>      <span class="at">title =</span> <span class="st">"Number of Times Rachel Says 'Honey' per Season"</span>,</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Season"</span>,</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Number of 'Honey' Occurrences"</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(LAhomes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 8
+  city       type    bed  bath garage  sqft pool   price
+  &lt;chr&gt;      &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt;
+1 Long Beach &lt;NA&gt;      0     1      0   513 N     119000
+2 Long Beach &lt;NA&gt;      0     1      0   550 N     153000
+3 Long Beach &lt;NA&gt;      0     1      0   550 N     205000
+4 Long Beach &lt;NA&gt;      0     1      1  1030 N     300000
+5 Long Beach &lt;NA&gt;      0     1      1  1526 N     375000
+6 Long Beach &lt;NA&gt;      1     1      0   552 N     159900</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>twoLAhomes <span class="ot">&lt;-</span> LAhomes <span class="sc">%&gt;%</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(city <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Santa Monica"</span>, <span class="st">"Long Beach"</span>))</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>perm_data <span class="ot">&lt;-</span> <span class="cf">function</span>(rep, data) {</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  data <span class="sc">|&gt;</span> </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">city_perm =</span> <span class="fu">sample</span>(city, <span class="at">replace =</span> <span class="cn">FALSE</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(city_perm) <span class="sc">|&gt;</span> </span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">perm_ave =</span> <span class="fu">mean</span>(price, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span> </span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>      <span class="at">perm_ave_diff =</span> <span class="fu">diff</span>(perm_ave),</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>      <span class="at">rep =</span> rep</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>observed_diff <span class="ot">&lt;-</span> twoLAhomes <span class="sc">|&gt;</span> </span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(city) <span class="sc">|&gt;</span> </span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">obs_ave =</span> <span class="fu">mean</span>(price, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">obs_ave_diff =</span> <span class="fu">diff</span>(obs_ave)) <span class="sc">|&gt;</span> </span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>()</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)  </span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>num_reps <span class="ot">&lt;-</span> <span class="dv">500</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>perm_results <span class="ot">&lt;-</span> <span class="fu">map_dfr</span>(<span class="dv">1</span><span class="sc">:</span>num_reps, <span class="sc">~</span> <span class="fu">perm_data</span>(.x, twoLAhomes))</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>p_value <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">abs</span>(perm_results<span class="sc">$</span>perm_ave_diff) <span class="sc">&gt;</span> observed_diff)</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>p_value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(perm_results<span class="sc">$</span>perm_ave_diff)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="friendsdialogue_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="Project3_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>perm_results <span class="sc">%&gt;%</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> perm_ave_diff)) <span class="sc">+</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">fill =</span> <span class="st">"lightblue"</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> observed_diff, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distribution of Permuted Mean Differences"</span>,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="fu">paste</span>(<span class="st">"Observed Mean Difference ="</span>, <span class="fu">round</span>(observed_diff, <span class="dv">2</span>)),</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Permuted Average Difference"</span>,</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Frequency"</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="sc">-</span><span class="dv">800000</span>, <span class="dv">800000</span>) <span class="sc">+</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Project3_files/figure-html/unnamed-chunk-2-2.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-</section>
-<section id="description-of-insights" class="level1">
-<h1>Description of Insights</h1>
-<p>The histogram illustrates how the use of the word “honey” by Rachel fluctuates across seasons, with some seasons showing higher frequencies than others. Rachel’s use of “honey” peaks during Season 3 with the highest number of occurrence of 40. Another peak occurs in Season 5, with a number of occurrence of approximately 35. In seasons 2 and 7, there is a moderate use of the word “honey,” with occurrences around 20-25, suggesting that Rachel uses “honey” consistently but less frequently in these seasons. The lowest number of times “honey” is used is in Season 1, with less than 10 occurrences. Similarly, Rachel uses “honey” less in later seasons. For instance, in Season 10, number of occurrences falls below 10. Overall, the plot indicates that Rachel’s use of the term “honey” peaks during the middle seasons of the the show and drops off significantly in the early and final seasons. I wonder how this might relate to a more nuanced analysis on the relationship between Rachel’s emotional state and dialogue across seasons. So, for instance, can there be a correlation between her use of “honey” and her emotional state? This analysis could be interesting if particular events in her life are taken as reference points, such as her relationship with Ross (times/seasons when their together and when they are not etc.).</p>
-</section>
-<section id="analysis-of-utterance-categories" class="level1">
-<h1>Analysis of Utterance Categories</h1>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>summary_data <span class="ot">&lt;-</span> friends <span class="sc">|&gt;</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">text_lower =</span> <span class="fu">str_to_lower</span>(text),  </span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">is_love =</span> <span class="fu">str_detect</span>(text_lower, <span class="st">"</span><span class="sc">\\</span><span class="st">blove</span><span class="sc">\\</span><span class="st">b"</span>),</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">is_question =</span> <span class="fu">str_detect</span>(text_lower, <span class="st">"^(what|where|who|when|how)"</span>),</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">has_multiple_exclamations =</span> <span class="fu">str_detect</span>(text_lower, <span class="st">"!{2,}"</span>)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>summary_data <span class="ot">&lt;-</span> summary_data <span class="sc">|&gt;</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">love_statements =</span> <span class="fu">sum</span>(is_love),</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">questions =</span> <span class="fu">sum</span>(is_question),</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>      <span class="at">multiple_exclamations =</span> <span class="fu">sum</span>(has_multiple_exclamations)</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>      ) <span class="sc">|&gt;</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">everything</span>(), <span class="at">names_to =</span> <span class="st">"category"</span>, <span class="at">values_to =</span> <span class="st">"count"</span>)</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a> <span class="co"># total_data = full_join(summary_data, friends, by ="speaker") --&gt; new fata frame that has count and category columns. the problem is that the category is not in summary_data</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>summary_data <span class="sc">|&gt;</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> category, <span class="at">y =</span> count, <span class="at">fill =</span> category)) <span class="sc">+</span></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Analysis of Utterance Categories"</span>, <span class="at">x =</span> <span class="st">"Category"</span>, <span class="at">y =</span> <span class="st">"Count"</span>) <span class="sc">+</span></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="friendsdialogue_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="description-of-insights-1" class="level1">
-<h1>Description of Insights</h1>
-<p>The histogram provides information on the different types of utterances across three categories: love statements, multiple exclamations, and questions. The plot depicts that the questions category has the highest count of occurrences with over 3000 instances, indicating that speakers in the show ask questions more frequently than they express love or use exclamations. Furthermore, having a count between 1500 and 2000, multiple_exclamations is the second most frequent category. This suggests that expressions of excitement or heightened emotions, which are identified by multiple exclamations, are relatively common but not as common as questions. Lastly, love statements is the least frequent category, with a count of around 1000. This implies that expressions of love occur less frequently compared to the other two categories. Overall, the graph analyzes the nature of communication in Friends across the three parameters of love statements, multiple exclamations, and questions.</p>
+<p>What I Did:</p>
+<p>In my analysis of the LA homes dataset, focusing on whether the city in which a home is located (specifically between Santa Monica and Long Beach) affects the listing price, I created a function that calculates the permuted mean difference. This function shuffles the city labels while keeping the prices fixed, simulating what the mean difference would look like under the null hypothesis. Using the map_dfr() function, I ran 500 iterations of this permutation process and compiled the results into a data frame. I then visualized the results by plotting a histogram of the distribution of permuted mean differences and marked the observed mean difference with a red dashed line for comparison. Finally, I calculated the p-value to determine the proportion of permuted mean differences that were greater than the observed mean difference. Under the null hypothesis and assuming that the average home prices in Santa Monica and Long Beach come from the same distribution, the p-value represents the probability of observing a mean difference as large as the actual observed difference (754,943.92) by random chance. If the p-value is approximately 0%, this indicates that it is highly unlikely to observe such a difference under the null hypothesis. Therefore, we can reject the null hypothesis and conclude that there is a significant difference in the average home prices between Santa Monica and Long Beach.</p>
+<p>Insights from the Plot:</p>
+<p>In terms of the distribution of permuted differences, the histogram depicts the distribution of permuted mean differences under the null hypothesis, which assumes there is no significant difference in mean home prices between Santa Monica and Long Beach. The fact that the distribution is centered around zero indicates that when city labels are shuffled, the mean difference is typically around zero.</p>
+<p>In terms of observed mean difference, the red dashed line represents the observed mean difference (754,943.92) between the actual home prices in Santa Monica and Long Beach. This value is beyond the range of most of the permuted mean differences.</p>
+<p>In terms of the significance of the observed difference, the fact that the observed mean difference is far to the right of the distribution of permuted differences suggests that the observed difference is unlikely to occur by random chance. This implies that the city (Santa Monica or Long Beach) does have a significant effect on the mean home price.</p>
+<p>In terms of what the p-value means, since the calculated p-value is approximately 0, it can be said that the observed mean difference is statistically significant. By suggesting that the mean home price in Santa Monica and Long beach differ significantly, the p-value allows us to reject the null hypothesis.</p>
+<p>Source of Data: https://openintrostat.github.io/openintro/reference/LAhomes.html#ref-examples</p>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
