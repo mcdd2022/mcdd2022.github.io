@@ -18,8 +18,7 @@ library(dplyr)
 
 ```
 
-Research Question: How do the locations of homes in Santa Monica and Long Beach affect their listing prices?
-Null Hypothesis: There is no significant difference in the mean listing prices of homes between Santa Monica and Long Beach. 
+Research Question: How do the locations of homes in Santa Monica and Long Beach affect their listing prices? Null Hypothesis: There is no significant difference in the mean listing prices of homes between Santa Monica and Long Beach.
 
 Plan:
 
@@ -77,11 +76,12 @@ ggplot(aes(x = perm_ave_diff)) +
   theme_minimal()
 
 ```
+
 What I Did:
 
 In my analysis of the LA homes dataset, focusing on whether the city in which a home is located (specifically between Santa Monica and Long Beach) affects the listing price, I created a function that calculates the permuted mean difference. This function shuffles the city labels while keeping the prices fixed, simulating what the mean difference would look like under the null hypothesis. Using the map_dfr() function, I ran 500 iterations of this permutation process and compiled the results into a data frame. I then visualized the results by plotting a histogram of the distribution of permuted mean differences and marked the observed mean difference with a red dashed line for comparison. Finally, I calculated the p-value to determine the proportion of permuted mean differences that were greater than the observed mean difference. Under the null hypothesis and assuming that the average home prices in Santa Monica and Long Beach come from the same distribution, the p-value represents the probability of observing a mean difference as large as the actual observed difference (754,943.92) by random chance. If the p-value is approximately 0%, this indicates that it is highly unlikely to observe such a difference under the null hypothesis. Therefore, we can reject the null hypothesis and conclude that there is a significant difference in the average home prices between Santa Monica and Long Beach.
 
-Insights from the Plot: 
+Insights from the Plot:
 
 In terms of the distribution of permuted differences, the histogram depicts the distribution of permuted mean differences under the null hypothesis, which assumes there is no significant difference in mean home prices between Santa Monica and Long Beach. The fact that the distribution is centered around zero indicates that when city labels are shuffled, the mean difference is typically around zero.
 
@@ -89,6 +89,6 @@ In terms of observed mean difference, the red dashed line represents the observe
 
 In terms of the significance of the observed difference, the fact that the observed mean difference is far to the right of the distribution of permuted differences suggests that the observed difference is unlikely to occur by random chance. This implies that the city (Santa Monica or Long Beach) does have a significant effect on the mean home price.
 
-In terms of what the p-value means, since the calculated p-value is approximately 0, it can be said that the observed mean difference is statistically significant. By suggesting that the mean home price in Santa Monica and Long beach differ significantly, the p-value allows us to reject the null hypothesis. 
+In terms of what the p-value means, since the calculated p-value is approximately 0, it can be said that the observed mean difference is statistically significant. By suggesting that the mean home price in Santa Monica and Long beach differ significantly, the p-value allows us to reject the null hypothesis.
 
 Source of Data: https://openintrostat.github.io/openintro/reference/LAhomes.html#ref-examples
