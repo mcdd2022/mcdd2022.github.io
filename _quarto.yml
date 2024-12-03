@@ -21,7 +21,7 @@ website:
         href: Project3.html
       - text: "Project 4"
         href: Project4.html
-      - text: "Title"
+      - text: "Project 5"
         href: Project5.html
     left:
       - href: index.qmd
