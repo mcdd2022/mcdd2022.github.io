@@ -1,5 +1,5 @@
 ---
-title: "title of presentation"
+title: "Title"
 author: "Mayra Coruh"
 subtitle: "December 6, 2024"
 format:
