@@ -1,5 +1,5 @@
 ---
-title: "Permutation Test on LAhomes"
+title: "Permutation Tests"
 author: "Mayra Coruh"
 subtitle: "December 6, 2024"
 format:
