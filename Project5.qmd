@@ -47,7 +47,8 @@ Null Hypothesis: There is no significant difference in the mean listing prices o
 ## The Code for the Permutation Test
 
 ```{r}
-twoLAhomes <- LAhomes %>% 
+
+twoLAhomes <- LAhomes |> 
   filter(city %in% c("Santa Monica", "Long Beach"))
 
 perm_data <- function(rep, data) {
@@ -67,17 +68,16 @@ observed_diff <- twoLAhomes |>
   group_by(city) |> 
   summarise(obs_ave = mean(price, na.rm = TRUE)) |> 
   mutate(obs_ave_diff = diff(obs_ave)) |> 
-  pull()
+  pull(obs_ave_diff)
 
 set.seed(123)  
 num_reps <- 500
 perm_results <- map_dfr(1:num_reps, ~ perm_data(.x, twoLAhomes))
 
-
-
-p_value <- mean(abs(perm_results$perm_ave_diff) > observed_diff)
+p_value <- mean(abs(perm_results |> pull(perm_ave_diff)) > observed_diff)
 
 p_value
+
 ```
 
 Walking Through the Code;
@@ -91,9 +91,8 @@ Walking Through the Code;
 ## Visualisation 
 
 ```{r}
-hist(perm_results$perm_ave_diff)
 
-perm_results %>% 
+perm_results |> 
 ggplot(aes(x = perm_ave_diff)) +
   geom_histogram(fill = "lightblue", color = "black", alpha = 0.7) +
   geom_vline(xintercept = observed_diff, color = "red", linetype = "dashed", linewidth = 1) +
