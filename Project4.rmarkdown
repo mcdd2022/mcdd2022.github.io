@@ -16,11 +16,13 @@ library(RMariaDB)
 library(tidyverse)
 ```
 
+
 Source of Data: Wideband Acoustic Immittance (WAI) Database hosted by Smith College (doi.org/10.35482/egr.001.2022)
 
 Plan:
 
 In this project, I plan to analyze and visualize data from the Wideband Acoustic Immittance (WAI) Database. To do so, I will consider the absorbance measurements across different frequencies for specific identifiers and groups. I will explore patterns in absorbance by using SQL queries, for instance, by grouping data by variables such as sex and frequency. Lastly, using ggplot, I intend to visualize the processed data in SQL to visually represent the explored relationships between variables.
+
 
 ```{r}
 con_wai <- dbConnect(
@@ -95,9 +97,11 @@ ggplot(aes (x = Frequency, y = mean_absorbance,
 
 ```
 
+
 Description of Graph:
 
 This plot titled "Mean Absorbance Across Frequencies for Various Studies" shows the mean absorbance values across a range of frequencies (plotted on a log scale) for various studies, as identified by the color-coded legend. The graph, where each line represents data from a specific study, depicts how absorbance varies with frequency within the range of 200 to 8000. Overall, the absorbance increases with frequency, reaching a peak between approximately 1000 and 3000 before declining.
+
 
 ```{sql}
 #| connection: con_wai
@@ -182,6 +186,7 @@ ggplot(aes (x = Frequency, y = mean_absorbance,
   )
 ```
 
+
 Description of Plot:
 
 This plot displays the mean absorbance across a range of frequencies (plotted on a log scale) for female participants. The red line represents how the absorbance changes as frequency increases, starting from around 300 and extending up to approximately 8000. Absorbance increases steadily at lower frequencies, reaching a peak between 1000 and 3000 before declining at higher frequencies.
@@ -189,3 +194,4 @@ This plot displays the mean absorbance across a range of frequencies (plotted on
 Description of Code:
 
 In the code above, I, initially, connected to the WAI database and used SQL queries to extract absorbance data grouped by identifiers, sex, and frequency, applying necessary filters for frequency range and study identifiers. Then, piping in the processed data into R, I visualized it via ggplot. For example, I plotted mean absorbance by frequency on a log scale, distinguishing data by attributes like sex or study identifiers.
+

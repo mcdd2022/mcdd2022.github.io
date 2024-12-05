@@ -91,6 +91,8 @@ Walking Through the Code;
 ## Visualisation 
 
 ```{r}
+#| echo: false
+#| eval: true
 
 perm_results |> 
 ggplot(aes(x = perm_ave_diff)) +
@@ -107,7 +109,7 @@ ggplot(aes(x = perm_ave_diff)) +
 
 ```
 
-Insights from the Plot:
+## Insights from the Plot:
 
 - Histogram depicts the distribution of permuted mean differences under the null hypothesis, which assumes there is no significant difference in mean home prices between Santa Monica and Long Beach. The fact that the distribution is centered around zero indicates that when city labels are shuffled, the mean difference is typically around zero.
 

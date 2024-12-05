@@ -109,7 +109,7 @@
     "href": "Project5.html#visualisation",
     "title": "Permutation Tests",
     "section": "Visualisation",
-    "text": "Visualisation\n\nperm_results |&gt; \nggplot(aes(x = perm_ave_diff)) +\n  geom_histogram(fill = \"lightblue\", color = \"black\", alpha = 0.7) +\n  geom_vline(xintercept = observed_diff, color = \"red\", linetype = \"dashed\", linewidth = 1) +\n  labs(\n    title = \"Distribution of Permuted Mean Differences\",\n    subtitle = paste(\"Observed Mean Difference =\", round(observed_diff, 2)),\n    x = \"Permuted Average Difference\",\n    y = \"Frequency\"\n  ) +\n  xlim(-800000, 800000) +\n  theme_minimal()\n\n\nInsights from the Plot:\n\nHistogram depicts the distribution of permuted mean differences under the null hypothesis, which assumes there is no significant difference in mean home prices between Santa Monica and Long Beach. The fact that the distribution is centered around zero indicates that when city labels are shuffled, the mean difference is typically around zero.\nRed dashed line represents the observed mean difference (754,943.92) between the actual home prices in Santa Monica and Long Beach. This value is beyond the range of most of the permuted mean differences.\nThe observed mean difference is far to the right of the distribution of permuted differences, suggesting that the observed difference is unlikely to occur by random chance. Hence, the city (Santa Monica or Long Beach) has a significant effect on the mean home price.\nSince the calculated p-value is approximately 0, it can be said that the observed mean difference is statistically significant. By suggesting that the mean home price in Santa Monica and Long beach differ significantly, the p-value allows us to reject the null hypothesis."
+    "text": "Visualisation"
   },
   {
     "objectID": "Project5.html#signficiance-of-permutation-tests-and-what-i-learned",
@@ -117,5 +117,12 @@
     "title": "Permutation Tests",
     "section": "Signficiance of Permutation Tests and What I Learned",
     "text": "Signficiance of Permutation Tests and What I Learned\nhıııı"
+  },
+  {
+    "objectID": "Project5.html#insights-from-the-plot",
+    "href": "Project5.html#insights-from-the-plot",
+    "title": "Permutation Tests",
+    "section": "Insights from the Plot:",
+    "text": "Insights from the Plot:\n\nHistogram depicts the distribution of permuted mean differences under the null hypothesis, which assumes there is no significant difference in mean home prices between Santa Monica and Long Beach. The fact that the distribution is centered around zero indicates that when city labels are shuffled, the mean difference is typically around zero.\nRed dashed line represents the observed mean difference (754,943.92) between the actual home prices in Santa Monica and Long Beach. This value is beyond the range of most of the permuted mean differences.\nThe observed mean difference is far to the right of the distribution of permuted differences, suggesting that the observed difference is unlikely to occur by random chance. Hence, the city (Santa Monica or Long Beach) has a significant effect on the mean home price.\nSince the calculated p-value is approximately 0, it can be said that the observed mean difference is statistically significant. By suggesting that the mean home price in Santa Monica and Long beach differ significantly, the p-value allows us to reject the null hypothesis."
   }
 ]
