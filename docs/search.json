@@ -88,7 +88,7 @@
     "href": "Project5.html#lahomes-dataset",
     "title": "Permutation Tests",
     "section": "LAhomes Dataset",
-    "text": "LAhomes Dataset\n\nlibrary(tidyverse)\nlibrary(ggplot2)\nlibrary(openintro)\nlibrary(dplyr)\ndata(LAhomes)\n\n\nhead(LAhomes)\n\n# A tibble: 6 × 8\n  city       type    bed  bath garage  sqft pool   price\n  &lt;chr&gt;      &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt;\n1 Long Beach &lt;NA&gt;      0     1      0   513 N     119000\n2 Long Beach &lt;NA&gt;      0     1      0   550 N     153000\n3 Long Beach &lt;NA&gt;      0     1      0   550 N     205000\n4 Long Beach &lt;NA&gt;      0     1      1  1030 N     300000\n5 Long Beach &lt;NA&gt;      0     1      1  1526 N     375000\n6 Long Beach &lt;NA&gt;      1     1      0   552 N     159900\n\n\nI conduct a permutation test to assess whether the city in which a home is located (specifically between Santa Monica and Long Beach) has a significant effect on the listing price.\nResearch Question: How do the locations of homes in Santa Monica and Long Beach affect their listing prices?\nNull Hypothesis: There is no significant difference in the mean listing prices of homes between Santa Monica and Long Beach."
+    "text": "LAhomes Dataset\n\nlibrary(tidyverse)\nlibrary(ggplot2)\nlibrary(openintro)\nlibrary(dplyr)\ndata(LAhomes)\n\n\nhead(LAhomes)\n\n# A tibble: 6 × 8\n  city       type    bed  bath garage  sqft pool   price\n  &lt;chr&gt;      &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt;\n1 Long Beach &lt;NA&gt;      0     1      0   513 N     119000\n2 Long Beach &lt;NA&gt;      0     1      0   550 N     153000\n3 Long Beach &lt;NA&gt;      0     1      0   550 N     205000\n4 Long Beach &lt;NA&gt;      0     1      1  1030 N     300000\n5 Long Beach &lt;NA&gt;      0     1      1  1526 N     375000\n6 Long Beach &lt;NA&gt;      1     1      0   552 N     159900\n\n\nI conduct a permutation test to assess whether the city in which a home is located (specifically between Santa Monica and Long Beach) is associated with the listing price.\nResearch Question: How are the listing prices of homes in Santa Monica and Long Beach, within the population of homes listed for sale in Los Angeles in 2010, associated with their locations?\nNull Hypothesis: For the population of homes listed for sale in Los Angeles in 2010, there is no difference in the mean listing prices of homes between Santa Monica and Long Beach."
   },
   {
     "objectID": "Project5.html#how-do-i-perform-the-permutation-test",
@@ -116,7 +116,7 @@
     "href": "Project5.html#signficiance-of-permutation-tests-and-what-i-learned",
     "title": "Permutation Tests",
     "section": "Signficiance of Permutation Tests and What I Learned",
-    "text": "Signficiance of Permutation Tests and What I Learned\nhıııı"
+    "text": "Signficiance of Permutation Tests and What I Learned"
   },
   {
     "objectID": "Project5.html#insights-from-the-plot",

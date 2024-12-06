@@ -28,11 +28,13 @@ data(LAhomes)
 head(LAhomes)
 ```
 
-I conduct a permutation test to assess whether the city in which a home is located (specifically between Santa Monica and Long Beach) has a significant effect on the listing price. 
+I conduct a permutation test to assess whether the city in which a home is located (specifically between Santa Monica and Long Beach) is associated with the listing price.
 
-Research Question: How do the locations of homes in Santa Monica and Long Beach affect their listing prices? 
+Research Question:
+How are the listing prices of homes in Santa Monica and Long Beach, within the population of homes listed for sale in Los Angeles in 2010, associated with their locations?
 
-Null Hypothesis: There is no significant difference in the mean listing prices of homes between Santa Monica and Long Beach.
+Null Hypothesis:
+For the population of homes listed for sale in Los Angeles in 2010, there is no difference in the mean listing prices of homes between Santa Monica and Long Beach.
 
 
 ## How Do I Perform the Permutation Test?
@@ -88,6 +90,7 @@ Walking Through the Code;
 - Finally, I calculated the p-value to determine the proportion of permuted mean differences that were greater than the observed mean difference. 
 - Under the null hypothesis and assuming that the average home prices in Santa Monica and Long Beach come from the same distribution, the p-value represents the probability of observing a mean difference as large as the actual observed difference (754,943.92) by random chance. If the p-value is approximately 0%, this indicates that it is highly unlikely to observe such a difference under the null hypothesis. Therefore, we can reject the null hypothesis and conclude that there is a significant difference in the average home prices between Santa Monica and Long Beach.
 
+
 ## Visualisation 
 
 ```{r}
@@ -122,7 +125,7 @@ ggplot(aes(x = perm_ave_diff)) +
 
 ## Signficiance of Permutation Tests and What I Learned 
 
-hıııı
+
 
 
 
