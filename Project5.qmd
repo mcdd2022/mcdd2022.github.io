@@ -123,7 +123,6 @@ ggplot(aes(x = perm_ave_diff)) +
 - Since the calculated p-value is approximately 0, it can be said that the observed mean difference is statistically significant. By suggesting that the mean home price in Santa Monica and Long beach differ significantly, the p-value allows us to reject the null hypothesis.
 
 
-## Signficiance of Permutation Tests and What I Learned 
 
 
 
