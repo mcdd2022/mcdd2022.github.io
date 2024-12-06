@@ -19,17 +19,21 @@ data(LAhomes)
 
 ```
 
-Research Question: How do the locations of homes in Santa Monica and Long Beach affect their listing prices? Null Hypothesis: There is no significant difference in the mean listing prices of homes between Santa Monica and Long Beach.
+Research Question:
+How are the listing prices of homes in Santa Monica and Long Beach, within the population of homes listed for sale in Los Angeles in 2010, associated with their locations?
+
+Null Hypothesis:
+For the population of homes listed for sale in Los Angeles in 2010, there is no difference in the mean listing prices of homes between Santa Monica and Long Beach.
 
 Plan:
 
-In this analysis of the LA homes dataset, I conduct a permutation test to assess whether the city in which a home is located (specifically between Santa Monica and Long Beach) has a significant effect on the listing price. I begin by filtering the data to only include homes from these two cities. I then create a function that calculates the permuted mean difference in listing prices by randomly shuffling the city labels while keeping the prices fixed. This process is repeated multiple times through the map() function to generate a distribution of permuted mean differences under the null hypothesis, which states that the mean listing prices between the two cities are the same. Then, I calculate the observed mean difference and compare it to the distribution of permuted differences to compute the p-value. Finally, I visualize the distribution of these permuted mean differences and mark the observed mean difference to assess its significance.
+In this analysis of the LA homes dataset, I conduct a permutation test to assess whether the city in which a home is located (specifically between Santa Monica and Long Beach) is associated with the listing price. I begin by filtering the data to only include homes from these two cities. I then create a function that calculates the permuted mean difference in listing prices by randomly shuffling the city labels while keeping the prices fixed. This process is repeated multiple times through the map() function to generate a distribution of permuted mean differences under the null hypothesis, which states that the mean listing prices between the two cities are the same. Then, I calculate the observed mean difference and compare it to the distribution of permuted differences to compute the p-value. Finally, I visualize the distribution of these permuted mean differences and mark the observed mean difference to assess its significance.
 
 ```{r}
 
 head(LAhomes)
 
-twoLAhomes <- LAhomes %>% 
+twoLAhomes <- LAhomes |> 
   filter(city %in% c("Santa Monica", "Long Beach"))
 
 perm_data <- function(rep, data) {
@@ -49,21 +53,17 @@ observed_diff <- twoLAhomes |>
   group_by(city) |> 
   summarise(obs_ave = mean(price, na.rm = TRUE)) |> 
   mutate(obs_ave_diff = diff(obs_ave)) |> 
-  pull()
+  pull(obs_ave_diff)
 
 set.seed(123)  
 num_reps <- 500
 perm_results <- map_dfr(1:num_reps, ~ perm_data(.x, twoLAhomes))
 
-
-
-p_value <- mean(abs(perm_results$perm_ave_diff) > observed_diff)
+p_value <- mean(abs(perm_results |> pull(perm_ave_diff)) > observed_diff)
 
 p_value
 
-hist(perm_results$perm_ave_diff)
-
-perm_results %>% 
+perm_results |> 
 ggplot(aes(x = perm_ave_diff)) +
   geom_histogram(fill = "lightblue", color = "black", alpha = 0.7) +
   geom_vline(xintercept = observed_diff, color = "red", linetype = "dashed", linewidth = 1) +
@@ -80,7 +80,9 @@ ggplot(aes(x = perm_ave_diff)) +
 
 What I Did:
 
-In my analysis of the LA homes dataset, focusing on whether the city in which a home is located (specifically between Santa Monica and Long Beach) affects the listing price, I created a function that calculates the permuted mean difference. This function shuffles the city labels while keeping the prices fixed, simulating what the mean difference would look like under the null hypothesis. Using the map_dfr() function, I ran 500 iterations of this permutation process and compiled the results into a data frame. I then visualized the results by plotting a histogram of the distribution of permuted mean differences and marked the observed mean difference with a red dashed line for comparison. Finally, I calculated the p-value to determine the proportion of permuted mean differences that were greater than the observed mean difference. Under the null hypothesis and assuming that the average home prices in Santa Monica and Long Beach come from the same distribution, the p-value represents the probability of observing a mean difference as large as the actual observed difference (754,943.92) by random chance. If the p-value is approximately 0%, this indicates that it is highly unlikely to observe such a difference under the null hypothesis. Therefore, we can reject the null hypothesis and conclude that there is a significant difference in the average home prices between Santa Monica and Long Beach.
+In my analysis of the LA homes dataset, focusing on whether the city in which a home is located (specifically between Santa Monica and Long Beach) is associated with the listing price, I created a function that calculates the permuted mean difference. This function shuffles the city labels while keeping the prices fixed, simulating what the mean difference would look like under the null hypothesis. Using the map_dfr() function, I ran 500 iterations of this permutation process and compiled the results into a data frame. I then visualized the results by plotting a histogram of the distribution of permuted mean differences and marked the observed mean difference with a red dashed line for comparison. Finally, I calculated the p-value to determine the proportion of permuted mean differences that were greater than the observed mean difference. Under the null hypothesis and assuming that the average home prices in Santa Monica and Long Beach come from the same distribution, the p-value represents the probability of observing a mean difference as large as the actual observed difference (754,943.92) by random chance. If the p-value is approximately 0%, this indicates that it is highly unlikely to observe such a difference under the null hypothesis. Therefore, we can reject the null hypothesis and conclude that there is a significant difference in the average home prices between Santa Monica and Long Beach.
+
+The null hypothesis assumes that the average home prices in Santa Monica and Long Beach come from the same population of homes listed for sale in Los Angeles in 2010. The p-value represents the probability of observing a mean difference as large as the actual observed difference ($754,943.92) in the dataset by random chance, under the assumption that the null hypothesis is true. If the p-value is approximately 0%, this suggests that such a difference is highly unlikely to occur in the dataset under the null hypothesis. Based on this analysis, we can reject the null hypothesis and conclude that, for the population of homes listed for sale in Los Angeles in 2010, there is evidence of a difference in the average home prices between Santa Monica and Long Beach.
 
 Insights from the Plot:
 

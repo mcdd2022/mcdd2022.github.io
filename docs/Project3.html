@@ -170,7 +170,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./Project5.html"> 
-<span class="menu-text">Project 5</span></a>
+<span class="menu-text">Permutation Tests</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -233,9 +233,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(LAhomes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Research Question: How do the locations of homes in Santa Monica and Long Beach affect their listing prices? Null Hypothesis: There is no significant difference in the mean listing prices of homes between Santa Monica and Long Beach.</p>
+<p>Research Question: How are the listing prices of homes in Santa Monica and Long Beach, within the population of homes listed for sale in Los Angeles in 2010, associated with their locations?</p>
+<p>Null Hypothesis: For the population of homes listed for sale in Los Angeles in 2010, there is no difference in the mean listing prices of homes between Santa Monica and Long Beach.</p>
 <p>Plan:</p>
-<p>In this analysis of the LA homes dataset, I conduct a permutation test to assess whether the city in which a home is located (specifically between Santa Monica and Long Beach) has a significant effect on the listing price. I begin by filtering the data to only include homes from these two cities. I then create a function that calculates the permuted mean difference in listing prices by randomly shuffling the city labels while keeping the prices fixed. This process is repeated multiple times through the map() function to generate a distribution of permuted mean differences under the null hypothesis, which states that the mean listing prices between the two cities are the same. Then, I calculate the observed mean difference and compare it to the distribution of permuted differences to compute the p-value. Finally, I visualize the distribution of these permuted mean differences and mark the observed mean difference to assess its significance.</p>
+<p>In this analysis of the LA homes dataset, I conduct a permutation test to assess whether the city in which a home is located (specifically between Santa Monica and Long Beach) is associated with the listing price. I begin by filtering the data to only include homes from these two cities. I then create a function that calculates the permuted mean difference in listing prices by randomly shuffling the city labels while keeping the prices fixed. This process is repeated multiple times through the map() function to generate a distribution of permuted mean differences under the null hypothesis, which states that the mean listing prices between the two cities are the same. Then, I calculate the observed mean difference and compare it to the distribution of permuted differences to compute the p-value. Finally, I visualize the distribution of these permuted mean differences and mark the observed mean difference to assess its significance.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(LAhomes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -249,7 +250,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 5 Long Beach &lt;NA&gt;      0     1      1  1526 N     375000
 6 Long Beach &lt;NA&gt;      1     1      0   552 N     159900</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>twoLAhomes <span class="ot">&lt;-</span> LAhomes <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>twoLAhomes <span class="ot">&lt;-</span> LAhomes <span class="sc">|&gt;</span> </span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(city <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Santa Monica"</span>, <span class="st">"Long Beach"</span>))</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>perm_data <span class="ot">&lt;-</span> <span class="cf">function</span>(rep, data) {</span>
@@ -269,21 +270,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(city) <span class="sc">|&gt;</span> </span>
 <span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">obs_ave =</span> <span class="fu">mean</span>(price, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
 <span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">obs_ave_diff =</span> <span class="fu">diff</span>(obs_ave)) <span class="sc">|&gt;</span> </span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>()</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(obs_ave_diff)</span>
 <span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)  </span>
 <span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>num_reps <span class="ot">&lt;-</span> <span class="dv">500</span></span>
 <span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>perm_results <span class="ot">&lt;-</span> <span class="fu">map_dfr</span>(<span class="dv">1</span><span class="sc">:</span>num_reps, <span class="sc">~</span> <span class="fu">perm_data</span>(.x, twoLAhomes))</span>
 <span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>p_value <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">abs</span>(perm_results <span class="sc">|&gt;</span> <span class="fu">pull</span>(perm_ave_diff)) <span class="sc">&gt;</span> observed_diff)</span>
 <span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>p_value <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">abs</span>(perm_results<span class="sc">$</span>perm_ave_diff) <span class="sc">&gt;</span> observed_diff)</span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>p_value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>p_value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(perm_results<span class="sc">$</span>perm_ave_diff)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>perm_results <span class="sc">|&gt;</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> perm_ave_diff)) <span class="sc">+</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">fill =</span> <span class="st">"lightblue"</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> observed_diff, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distribution of Permuted Mean Differences"</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="fu">paste</span>(<span class="st">"Observed Mean Difference ="</span>, <span class="fu">round</span>(observed_diff, <span class="dv">2</span>)),</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Permuted Average Difference"</span>,</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Frequency"</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="sc">-</span><span class="dv">800000</span>, <span class="dv">800000</span>) <span class="sc">+</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -291,28 +301,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>perm_results <span class="sc">%&gt;%</span> </span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> perm_ave_diff)) <span class="sc">+</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">fill =</span> <span class="st">"lightblue"</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> observed_diff, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distribution of Permuted Mean Differences"</span>,</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="fu">paste</span>(<span class="st">"Observed Mean Difference ="</span>, <span class="fu">round</span>(observed_diff, <span class="dv">2</span>)),</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Permuted Average Difference"</span>,</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Frequency"</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="sc">-</span><span class="dv">800000</span>, <span class="dv">800000</span>) <span class="sc">+</span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Project3_files/figure-html/unnamed-chunk-2-2.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
 </div>
 <p>What I Did:</p>
-<p>In my analysis of the LA homes dataset, focusing on whether the city in which a home is located (specifically between Santa Monica and Long Beach) affects the listing price, I created a function that calculates the permuted mean difference. This function shuffles the city labels while keeping the prices fixed, simulating what the mean difference would look like under the null hypothesis. Using the map_dfr() function, I ran 500 iterations of this permutation process and compiled the results into a data frame. I then visualized the results by plotting a histogram of the distribution of permuted mean differences and marked the observed mean difference with a red dashed line for comparison. Finally, I calculated the p-value to determine the proportion of permuted mean differences that were greater than the observed mean difference. Under the null hypothesis and assuming that the average home prices in Santa Monica and Long Beach come from the same distribution, the p-value represents the probability of observing a mean difference as large as the actual observed difference (754,943.92) by random chance. If the p-value is approximately 0%, this indicates that it is highly unlikely to observe such a difference under the null hypothesis. Therefore, we can reject the null hypothesis and conclude that there is a significant difference in the average home prices between Santa Monica and Long Beach.</p>
+<p>In my analysis of the LA homes dataset, focusing on whether the city in which a home is located (specifically between Santa Monica and Long Beach) is associated with the listing price, I created a function that calculates the permuted mean difference. This function shuffles the city labels while keeping the prices fixed, simulating what the mean difference would look like under the null hypothesis. Using the map_dfr() function, I ran 500 iterations of this permutation process and compiled the results into a data frame. I then visualized the results by plotting a histogram of the distribution of permuted mean differences and marked the observed mean difference with a red dashed line for comparison. Finally, I calculated the p-value to determine the proportion of permuted mean differences that were greater than the observed mean difference. Under the null hypothesis and assuming that the average home prices in Santa Monica and Long Beach come from the same distribution, the p-value represents the probability of observing a mean difference as large as the actual observed difference (754,943.92) by random chance. If the p-value is approximately 0%, this indicates that it is highly unlikely to observe such a difference under the null hypothesis. Therefore, we can reject the null hypothesis and conclude that there is a significant difference in the average home prices between Santa Monica and Long Beach.</p>
+<p>The null hypothesis assumes that the average home prices in Santa Monica and Long Beach come from the same population of homes listed for sale in Los Angeles in 2010. The p-value represents the probability of observing a mean difference as large as the actual observed difference ($754,943.92) in the dataset by random chance, under the assumption that the null hypothesis is true. If the p-value is approximately 0%, this suggests that such a difference is highly unlikely to occur in the dataset under the null hypothesis. Based on this analysis, we can reject the null hypothesis and conclude that, for the population of homes listed for sale in Los Angeles in 2010, there is evidence of a difference in the average home prices between Santa Monica and Long Beach.</p>
 <p>Insights from the Plot:</p>
 <p>In terms of the distribution of permuted differences, the histogram depicts the distribution of permuted mean differences under the null hypothesis, which assumes there is no significant difference in mean home prices between Santa Monica and Long Beach. The fact that the distribution is centered around zero indicates that when city labels are shuffled, the mean difference is typically around zero.</p>
 <p>In terms of observed mean difference, the red dashed line represents the observed mean difference (754,943.92) between the actual home prices in Santa Monica and Long Beach. This value is beyond the range of most of the permuted mean differences.</p>
