@@ -15,11 +15,11 @@ website:
             href: summermovies.html
           - text: "Campus Pride Index"
             href: pride.html
-      - text: "Mini Project 2"
+      - text: "Text Analysis"
         href: friendsdialogue.html
-      - text:  "Mini Project 3"
+      - text:  "Iteration"
         href: Project3.html
-      - text: "Project 4"
+      - text: "SQL"
         href: Project4.html
       - text: "Permutation Tests"
         href: Project5.html
