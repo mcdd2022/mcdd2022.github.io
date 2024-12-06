@@ -1,5 +1,5 @@
 ---
-title: "Project 4"
+title: "SQL"
 author: Mayra Coruh
 date: November 26, 2024
 format: html
