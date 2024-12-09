@@ -227,7 +227,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RMariaDB)</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Source of Data: Wideband Acoustic Immittance (WAI) Database hosted by Smith College (doi.org/10.35482/egr.001.2022)</p>
+<p>Source of Data: Ear and Hearing 40(6):p 1481, November/December 2019. | DOI: 10.1097/AUD.0000000000000790</p>
 <p>Plan:</p>
 <p>In this project, I plan to analyze and visualize data from the Wideband Acoustic Immittance (WAI) Database. To do so, I will consider the absorbance measurements across different frequencies for specific identifiers and groups. I will explore patterns in absorbance by using SQL queries, for instance, by grouping data by variables such as sex and frequency. Lastly, using ggplot, I intend to visualize the processed data in SQL to visually represent the explored relationships between variables.</p>
 <div class="cell">
@@ -243,7 +243,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># collect(Measurements)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>SHOW <span class="kw">TABLES</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Step 1: Explore the structure of the WAI database by listing available tables</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- This provides an overview of the database's components.</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>SHOW <span class="kw">TABLES</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
 <caption>7 records</caption>
@@ -279,9 +282,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> Measurements</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">LIMIT</span> <span class="dv">0</span>, <span class="dv">5</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Step 2: Preview the first few rows of the 'Measurements' table</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- This allows us to understand the structure and key variables of the dataset.</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> Measurements</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="kw">LIMIT</span> <span class="dv">0</span>, <span class="dv">5</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
 <caption>5 records</caption>
@@ -419,9 +425,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> PI_Info</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">LIMIT</span> <span class="dv">0</span>, <span class="dv">1</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Step 3: Filter detailed information for a specific study (Abur_2014)</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- The 'PI_Info' table contains metadata about studies in the database.</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> PI_Info </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> <span class="kw">Identifier</span> <span class="op">=</span> <span class="ot">"Abur_2014"</span>; </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
 <caption>1 records</caption>
@@ -494,82 +502,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> PI_Info </span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> <span class="kw">Identifier</span> <span class="op">=</span> <span class="ot">"Abur_2014"</span>; </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<table class="table table-sm table-striped small">
-<caption>1 records</caption>
-<colgroup>
-<col style="width: 0%">
-<col style="width: 0%">
-<col style="width: 1%">
-<col style="width: 0%">
-<col style="width: 1%">
-<col style="width: 0%">
-<col style="width: 1%">
-<col style="width: 88%">
-<col style="width: 0%">
-<col style="width: 0%">
-<col style="width: 0%">
-<col style="width: 5%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Identifier</th>
-<th style="text-align: right;">Year</th>
-<th style="text-align: left;">Authors</th>
-<th style="text-align: left;">AuthorsShortList</th>
-<th style="text-align: left;">Title</th>
-<th style="text-align: left;">Journal</th>
-<th style="text-align: left;">URL</th>
-<th style="text-align: left;">Abstract</th>
-<th style="text-align: left;">DataSubmitterName</th>
-<th style="text-align: left;">DataSubmitterEmail</th>
-<th style="text-align: left;">DateSubmitted</th>
-<th style="text-align: left;">PI_Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Abur_2014</td>
-<td style="text-align: right;">2014</td>
-<td style="text-align: left;">Defne Abur, Nicholas J. Horton, and Susan E. Voss</td>
-<td style="text-align: left;">Abur et al.</td>
-<td style="text-align: left;">Instrasubject variability in power reflectance</td>
-<td style="text-align: left;">J Am Acad Audiol</td>
-<td style="text-align: left;">https://www.ncbi.nlm.nih.gov/pubmed/25257718</td>
-<td style="text-align: left;">“</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-</tr>
-</tbody>
-</table>
-<p>
-<strong> Purpose: </strong> This study investigates test-retest features of power reflectance, including comparisons of intrasubject versus intersubject variability and how ear-canal measurement location affects measurements.
-</p>
-<p>
-<strong> Research design: </strong> Repeated measurements of power reflectance were made at about weekly intervals. The subjects returned for four to eight sessions. Measurements were made at three ear-canal locations: a deep insertion depth (with a foam plug flush at the entrance to the ear canal) and both 3 and 6 mm more lateral to this deep insertion.
-</p>
-<p>
-<strong> Study sample:</strong> Repeated measurements on seven subjects are reported. All subjects were female, between 19 and 22 yr old, and enrolled at an undergraduate women’s college.
-</p>
-<p>
-<strong> Data collection and analysis: </strong> Measurements on both the right and left ears were made at three ear-canal locations during each of four to eight measurement sessions. Random-effects regression models were used for the analysis to account for repeated measures within subjects. The mean power reflectance for each position over all sessions was calculated for each subject.
-</p>
-<p>
-<strong> Results: </strong> The comparison of power reflectance from the left and right ears of an individual subject varied greatly over the seven subjects; the difference between the power reflectance measured on the left and that measured on the right was compared at 248 frequencies, and depending on the subject, the percentage of tested frequencies for which the left and right ears differed significantly ranged from 10% to 93% (some with left values greater than right values and others with the opposite pattern). Although the individual subjects showed left-right differences, the overall population generally did not show significant differences between the left and right ears. The mean power reflectance for each measurement position over all sessions depended on the location of the probe in the ear for frequencies of less than 1000 Hz. The standard deviation between subjects’ mean power reflectance after controlling for ear (left or right) was found to be greater than the standard deviation within the individual subject’s mean power reflectance. The intrasubject standard deviation in power reflectance was smallest at the deepest insertion depths.
-</p>
-<p>
-<strong> Conclusions: </strong> All subjects had differences in power reflectance between their left and right ears at some frequencies; the percentage of frequencies at which differences occurred varied greatly across subjects. The intrasubject standard deviations were smallest for the deepest probe insertion depths, suggesting clinical measurements should be made with as deep an insertion as practically possible to minimize variability. This deep insertion will reduce both acoustic leaks and the effect of low-frequency ear-canal losses. The within-subject standard deviations were about half the magnitude of the overall standard deviations, quantifying the extent of intrasubject versus intersubject variability.
-</p>
-<p>” |Susan Voss |svoss@smith.edu |24-Aug-2016 |Measurements made on 7 subjects across multiple sessions and 3 probe locations for each subject. Database includes measurements at only the deepest insertion depth (Position 1) and Channel B only. |</p>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> Measurements </span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> <span class="kw">Identifier</span> <span class="op">=</span> <span class="ot">"Abur_2014"</span>; </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Step 4: Filter absorbance measurements for the study 'Abur_2014'</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- This query focuses on analyzing measurement data for the chosen study.</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> Measurements </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> <span class="kw">Identifier</span> <span class="op">=</span> <span class="ot">"Abur_2014"</span>; </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
 <caption>Displaying records 1 - 10</caption>
@@ -797,31 +734,40 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="cell" data-output.var="graph">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="kw">Identifier</span>, Frequency, LOG10(Frequency) <span class="kw">AS</span> log_frequency, <span class="fu">AVG</span>(Absorbance) <span class="kw">AS</span> mean_absorbance </span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> Measurements</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> <span class="kw">Identifier</span> <span class="kw">IN</span> (<span class="ot">"Abur_2014"</span>, <span class="ot">"Feeney_2017"</span>, <span class="ot">"Groon_2015"</span> ,<span class="ot">"Lewis_2015"</span>, <span class="ot">"Liu_2008"</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="ot">"Rosowski_2012"</span>, <span class="ot">"Shahnaz_2006"</span>, <span class="ot">"Shaver_2013"</span> , <span class="ot">"Sun_2016"</span>, <span class="ot">"Voss_1994"</span>, <span class="ot">"Voss_2010"</span>, <span class="ot">"Werner_2010"</span> ) <span class="kw">AND</span> Frequency <span class="op">&gt;</span> <span class="dv">200</span> <span class="kw">AND</span> Frequency <span class="op">&lt;</span> <span class="dv">8000</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> <span class="kw">Identifier</span>, Frequency;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- Step 5: Aggregate mean absorbance across frequencies for selected studies</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- This query filters data for specific studies and calculates mean absorbance </span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- for each frequency within the range 200-8000 Hz.</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">-- The results will be visualized later to explore absorbance patterns.</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="kw">Identifier</span>, Frequency, LOG10(Frequency) <span class="kw">AS</span> log_frequency, <span class="fu">AVG</span>(Absorbance) <span class="kw">AS</span> mean_absorbance </span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> Measurements</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> <span class="kw">Identifier</span> <span class="kw">IN</span> (<span class="ot">"Abur_2014"</span>, <span class="ot">"Feeney_2017"</span>, <span class="ot">"Groon_2015"</span> ,<span class="ot">"Lewis_2015"</span>, <span class="ot">"Liu_2008"</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="ot">"Rosowski_2012"</span>, <span class="ot">"Shahnaz_2006"</span>, <span class="ot">"Shaver_2013"</span> , <span class="ot">"Sun_2016"</span>, <span class="ot">"Voss_1994"</span>, <span class="ot">"Voss_2010"</span>, <span class="ot">"Werner_2010"</span> ) <span class="kw">AND</span> Frequency <span class="op">&gt;</span> <span class="dv">200</span> <span class="kw">AND</span> Frequency <span class="op">&lt;</span> <span class="dv">8000</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> <span class="kw">Identifier</span>, Frequency;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>graph <span class="sc">|&gt;</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span> (<span class="at">x =</span> Frequency, <span class="at">y =</span> mean_absorbance, </span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">color =</span> Identifier,</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">group =</span> Identifier)) <span class="sc">+</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()<span class="sc">+</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 6: Visualize mean absorbance across frequencies for various studies</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># This plot depicts how mean absorbance changes with frequency for selected studies.</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>graph <span class="sc">|&gt;</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span> (<span class="at">x =</span> Frequency, <span class="at">y =</span> mean_absorbance, </span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">color =</span> Identifier,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">group =</span> Identifier)) <span class="sc">+</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()<span class="sc">+</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Project4_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="Project4_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Mean Absorbance Across Frequencies for Various Studies"</span>,</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Frequency (Log Scale)"</span>,</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Mean Absorbance"</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Mean Absorbance Across Frequencies for Various Studies"</span>,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Frequency (Log Scale)"</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Mean Absorbance"</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$x
 [1] "Frequency (Log Scale)"
@@ -839,13 +785,17 @@ attr(,"class")
 <p>Description of Graph:</p>
 <p>This plot titled “Mean Absorbance Across Frequencies for Various Studies” shows the mean absorbance values across a range of frequencies (plotted on a log scale) for various studies, as identified by the color-coded legend. The graph, where each line represents data from a specific study, depicts how absorbance varies with frequency within the range of 200 to 8000. Overall, the absorbance increases with frequency, reaching a peak between approximately 1000 and 3000 before declining.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a> <span class="kw">SELECT</span> p.<span class="kw">Identifier</span>, p.<span class="dt">Year</span>, p.AuthorsShortList, </span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">COUNT</span>(<span class="kw">DISTINCT</span> SubjectNumber, Ear) <span class="kw">AS</span> ear_u</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> PI_Info <span class="kw">AS</span> p </span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="kw">LEFT</span> <span class="kw">JOIN</span> Measurements <span class="kw">AS</span> m <span class="kw">ON</span> m.<span class="kw">Identifier</span> <span class="op">=</span> p.<span class="kw">Identifier</span> </span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> p.<span class="kw">Identifier</span> <span class="kw">IN</span> (<span class="ot">"Abur_2014"</span>, <span class="ot">"Feeney_2017"</span>, <span class="ot">"Groon_2015"</span> ,<span class="ot">"Lewis_2015"</span>, <span class="ot">"Liu_2008"</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="ot">"Rosowski_2012"</span>, <span class="ot">"Shahnaz_2006"</span>, <span class="ot">"Shaver_2013"</span> , <span class="ot">"Sun_2016"</span>, <span class="ot">"Voss_1994"</span>, <span class="ot">"Voss_2010"</span>, <span class="ot">"Werner_2010"</span> ) <span class="kw">AND</span> Frequency <span class="op">&gt;</span> <span class="dv">200</span> <span class="kw">AND</span> Frequency <span class="op">&lt;</span> <span class="dv">8000</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> <span class="kw">Identifier</span>, Instrument;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Step 7: Join PI_Info and Measurements tables to count unique ears measured</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- This query provides additional context about the dataset by linking study metadata</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- with measurement data and counting distinct subject-ear combinations.</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> p.<span class="kw">Identifier</span>, p.<span class="dt">Year</span>, p.AuthorsShortList, </span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a> <span class="fu">COUNT</span>(<span class="kw">DISTINCT</span> SubjectNumber, Ear) <span class="kw">AS</span> ear_u</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> PI_Info <span class="kw">AS</span> p </span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="kw">LEFT</span> <span class="kw">JOIN</span> Measurements <span class="kw">AS</span> m <span class="kw">ON</span> m.<span class="kw">Identifier</span> <span class="op">=</span> p.<span class="kw">Identifier</span> </span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> p.<span class="kw">Identifier</span> <span class="kw">IN</span> (<span class="ot">"Abur_2014"</span>, <span class="ot">"Feeney_2017"</span>, <span class="ot">"Groon_2015"</span> ,<span class="ot">"Lewis_2015"</span>, <span class="ot">"Liu_2008"</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="ot">"Rosowski_2012"</span>, <span class="ot">"Shahnaz_2006"</span>, <span class="ot">"Shaver_2013"</span> , <span class="ot">"Sun_2016"</span>, <span class="ot">"Voss_1994"</span>, <span class="ot">"Voss_2010"</span>, <span class="ot">"Werner_2010"</span> ) <span class="kw">AND</span> Frequency <span class="op">&gt;</span> <span class="dv">200</span> <span class="kw">AND</span> Frequency <span class="op">&lt;</span> <span class="dv">8000</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> <span class="kw">Identifier</span>, Instrument;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
 <caption>Displaying records 1 - 10</caption>
@@ -923,14 +873,18 @@ attr(,"class")
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a> <span class="kw">SELECT</span> p.<span class="kw">Identifier</span>, <span class="dt">Year</span>, AuthorsShortList, </span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">COUNT</span>(<span class="kw">DISTINCT</span> SubjectNumber, Ear) <span class="kw">AS</span> ear_u,</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a> <span class="fu">CONCAT</span>(AuthorsShortList, <span class="ot">" ("</span> , <span class="dt">year</span>, <span class="ot">") "</span>, <span class="ot">"N="</span>, <span class="fu">COUNT</span>(<span class="kw">DISTINCT</span> SubjectNumber, Ear), <span class="ot">"; "</span>, Instrument) <span class="kw">AS</span> legend</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> PI_Info <span class="kw">AS</span> p </span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="kw">LEFT</span> <span class="kw">JOIN</span> Measurements <span class="kw">AS</span> m <span class="kw">ON</span> m.<span class="kw">Identifier</span> <span class="op">=</span> p.<span class="kw">Identifier</span> </span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> p.<span class="kw">Identifier</span> <span class="kw">IN</span> (<span class="ot">"Abur_2014"</span>, <span class="ot">"Feeney_2017"</span>, <span class="ot">"Groon_2015"</span> ,<span class="ot">"Lewis_2015"</span>, <span class="ot">"Liu_2008"</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="ot">"Rosowski_2012"</span>, <span class="ot">"Shahnaz_2006"</span>, <span class="ot">"Shaver_2013"</span> , <span class="ot">"Sun_2016"</span>, <span class="ot">"Voss_1994"</span>, <span class="ot">"Voss_2010"</span>, <span class="ot">"Werner_2010"</span> ) <span class="kw">AND</span> Frequency <span class="op">&gt;</span> <span class="dv">200</span> <span class="kw">AND</span> Frequency <span class="op">&lt;</span> <span class="dv">8000</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> <span class="kw">Identifier</span>, Instrument;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Step 8: Generate legend strings for studies with metadata and ear counts</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- This query creates formatted legend labels that combine study metadata </span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- (authors, year, sample size, instrument) to be used in visualization.</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> p.<span class="kw">Identifier</span>, <span class="dt">Year</span>, AuthorsShortList, </span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a> <span class="fu">COUNT</span>(<span class="kw">DISTINCT</span> SubjectNumber, Ear) <span class="kw">AS</span> ear_u,</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a> <span class="fu">CONCAT</span>(AuthorsShortList, <span class="ot">" ("</span> , <span class="dt">year</span>, <span class="ot">") "</span>, <span class="ot">"N="</span>, <span class="fu">COUNT</span>(<span class="kw">DISTINCT</span> SubjectNumber, Ear), <span class="ot">"; "</span>, Instrument) <span class="kw">AS</span> legend</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> PI_Info <span class="kw">AS</span> p </span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="kw">LEFT</span> <span class="kw">JOIN</span> Measurements <span class="kw">AS</span> m <span class="kw">ON</span> m.<span class="kw">Identifier</span> <span class="op">=</span> p.<span class="kw">Identifier</span> </span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> p.<span class="kw">Identifier</span> <span class="kw">IN</span> (<span class="ot">"Abur_2014"</span>, <span class="ot">"Feeney_2017"</span>, <span class="ot">"Groon_2015"</span> ,<span class="ot">"Lewis_2015"</span>, <span class="ot">"Liu_2008"</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="ot">"Rosowski_2012"</span>, <span class="ot">"Shahnaz_2006"</span>, <span class="ot">"Shaver_2013"</span> , <span class="ot">"Sun_2016"</span>, <span class="ot">"Voss_1994"</span>, <span class="ot">"Voss_2010"</span>, <span class="ot">"Werner_2010"</span> ) <span class="kw">AND</span> Frequency <span class="op">&gt;</span> <span class="dv">200</span> <span class="kw">AND</span> Frequency <span class="op">&lt;</span> <span class="dv">8000</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> <span class="kw">Identifier</span>, Instrument;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
 <caption>Displaying records 1 - 10</caption>
@@ -1026,34 +980,27 @@ attr(,"class")
 </div>
 </div>
 <div class="cell" data-output.var="graph2">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a> <span class="kw">SELECT</span> p.<span class="kw">Identifier</span>, p.<span class="dt">Year</span>, p.AuthorsShortList, Frequency,</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a> LOG10(Frequency) <span class="kw">AS</span> log_frequency, <span class="fu">AVG</span>(Absorbance) <span class="kw">AS</span> mean_absorbance,</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a> <span class="fu">COUNT</span>(<span class="kw">DISTINCT</span> SubjectNumber, Ear) <span class="kw">AS</span> ear_u,</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">CONCAT</span>(AuthorsShortList, <span class="ot">" ("</span> , <span class="dt">year</span>, <span class="ot">") "</span>, <span class="ot">"N="</span>, <span class="fu">COUNT</span>(<span class="kw">DISTINCT</span> SubjectNumber, Ear), <span class="ot">"; "</span>, Instrument) <span class="kw">AS</span> legend</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> PI_Info <span class="kw">AS</span> p </span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="kw">LEFT</span> <span class="kw">JOIN</span> Measurements <span class="kw">AS</span> m <span class="kw">ON</span> m.<span class="kw">Identifier</span> <span class="op">=</span> p.<span class="kw">Identifier</span> </span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> p.<span class="kw">Identifier</span> <span class="kw">IN</span> (<span class="ot">"Abur_2014"</span>, <span class="ot">"Feeney_2017"</span>, <span class="ot">"Groon_2015"</span> ,<span class="ot">"Lewis_2015"</span>, <span class="ot">"Liu_2008"</span></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="ot">"Rosowski_2012"</span>, <span class="ot">"Shahnaz_2006"</span>, <span class="ot">"Shaver_2013"</span> , <span class="ot">"Sun_2016"</span>, <span class="ot">"Voss_1994"</span>, <span class="ot">"Voss_2010"</span>, <span class="ot">"Werner_2010"</span> ) <span class="kw">AND</span> Frequency <span class="op">&gt;</span> <span class="dv">200</span> <span class="kw">AND</span> Frequency <span class="op">&lt;</span> <span class="dv">8000</span></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> <span class="kw">Identifier</span>, Instrument, Frequency;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- Step 9: Prepare data for graph visualization</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- This query extends the previous aggregation by including study metadata,</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- calculating mean absorbance across frequencies, and formatting legend labels.</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> p.<span class="kw">Identifier</span>, p.<span class="dt">Year</span>, p.AuthorsShortList, Frequency,</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a> LOG10(Frequency) <span class="kw">AS</span> log_frequency, <span class="fu">AVG</span>(Absorbance) <span class="kw">AS</span> mean_absorbance,</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a> <span class="fu">COUNT</span>(<span class="kw">DISTINCT</span> SubjectNumber, Ear) <span class="kw">AS</span> ear_u,</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a> <span class="fu">CONCAT</span>(AuthorsShortList, <span class="ot">" ("</span> , <span class="dt">year</span>, <span class="ot">") "</span>, <span class="ot">"N="</span>, <span class="fu">COUNT</span>(<span class="kw">DISTINCT</span> SubjectNumber, Ear), <span class="ot">"; "</span>, Instrument) <span class="kw">AS</span> legend</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> PI_Info <span class="kw">AS</span> p </span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="kw">LEFT</span> <span class="kw">JOIN</span> Measurements <span class="kw">AS</span> m <span class="kw">ON</span> m.<span class="kw">Identifier</span> <span class="op">=</span> p.<span class="kw">Identifier</span> </span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> p.<span class="kw">Identifier</span> <span class="kw">IN</span> (<span class="ot">"Abur_2014"</span>, <span class="ot">"Feeney_2017"</span>, <span class="ot">"Groon_2015"</span> ,<span class="ot">"Lewis_2015"</span>, <span class="ot">"Liu_2008"</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="ot">"Rosowski_2012"</span>, <span class="ot">"Shahnaz_2006"</span>, <span class="ot">"Shaver_2013"</span> , <span class="ot">"Sun_2016"</span>, <span class="ot">"Voss_1994"</span>, <span class="ot">"Voss_2010"</span>, <span class="ot">"Werner_2010"</span> ) <span class="kw">AND</span> Frequency <span class="op">&gt;</span> <span class="dv">200</span> <span class="kw">AND</span> Frequency <span class="op">&lt;</span> <span class="dv">8000</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> <span class="kw">Identifier</span>, Instrument, Frequency;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>graph2 <span class="sc">|&gt;</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span> (<span class="at">x =</span> Frequency, <span class="at">y =</span> mean_absorbance, </span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">color =</span> legend,</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">group =</span> legend)) <span class="sc">+</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()<span class="sc">+</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Project4_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> </span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> Subjects</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Step 10: Explore subject metadata</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- This query lists all entries in the Subjects table to inspect participant information.</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> </span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> Subjects</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
 <caption>Displaying records 1 - 10</caption>
@@ -1221,61 +1168,62 @@ attr(,"class")
 </div>
 </div>
 <div class="cell" data-output.var="graphforQ2">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> Sex, Frequency, </span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">AVG</span>(Absorbance) <span class="kw">AS</span> mean_absorbance, m.<span class="kw">Identifier</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> Subjects <span class="kw">AS</span> s</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="kw">RIGHT</span> <span class="kw">JOIN</span> Measurements <span class="kw">AS</span> m <span class="kw">ON</span> m.<span class="kw">Identifier</span> <span class="op">=</span> s.<span class="kw">Identifier</span> </span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> m.<span class="kw">Identifier</span> <span class="op">=</span> <span class="ot">"Lewis_2015"</span> <span class="kw">AND</span> Frequency <span class="op">&gt;</span> <span class="dv">200</span> <span class="kw">AND</span> Frequency <span class="op">&lt;</span> <span class="dv">8000</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> m.<span class="kw">Identifier</span>, Frequency, Sex;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Step 11: Analyze absorbance by sex for a specific study (Lewis_2015)</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- This query calculates mean absorbance for males and females separately </span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- for each frequency within the specified range.</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> Sex, Frequency, </span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">AVG</span>(Absorbance) <span class="kw">AS</span> mean_absorbance, m.<span class="kw">Identifier</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> Subjects <span class="kw">AS</span> s</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="kw">RIGHT</span> <span class="kw">JOIN</span> Measurements <span class="kw">AS</span> m <span class="kw">ON</span> m.SubjectNumber <span class="op">=</span> s.SubjectNumber </span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> m.<span class="kw">Identifier</span> <span class="op">=</span> <span class="ot">"Lewis_2015"</span> <span class="kw">AND</span> Frequency <span class="op">&gt;</span> <span class="dv">200</span> <span class="kw">AND</span> Frequency <span class="op">&lt;</span> <span class="dv">8000</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> m.<span class="kw">Identifier</span>, Frequency, Sex;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(graphforQ2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 12: Display the first few rows of the processed data for inspection</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(graphforQ2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>     Sex Frequency mean_absorbance Identifier
-1 Female   205.078       0.2497826 Lewis_2015
-2 Male     205.078       0.2497826 Lewis_2015
-3 Female   210.938       0.2555734 Lewis_2015
-4 Male     210.938       0.2555734 Lewis_2015
-5 Female   216.797       0.2612649 Lewis_2015
-6 Male     216.797       0.2612649 Lewis_2015</code></pre>
+<pre><code>      Sex Frequency mean_absorbance Identifier
+1  Female   205.078       0.2492254 Lewis_2015
+2    Male   205.078       0.2515049 Lewis_2015
+3 Unknown   205.078       0.2356815 Lewis_2015
+4  Female   210.938       0.2549658 Lewis_2015
+5    Male   210.938       0.2574019 Lewis_2015
+6 Unknown   210.938       0.2395970 Lewis_2015</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>graphforQ2 <span class="sc">|&gt;</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Sex <span class="sc">==</span> <span class="st">"Female"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span> (<span class="at">x =</span> Frequency, <span class="at">y =</span> mean_absorbance, </span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>   <span class="at">color =</span>  Sex,</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>   <span class="at">group =</span> Sex)) <span class="sc">+</span></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 13: Visualize absorbance trends for females in the 'Lewis_2015' study</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co"># This plot focuses on female participants, showing mean absorbance across frequencies.</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>graphforQ2 <span class="sc">|&gt;</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> Frequency,</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> mean_absorbance,</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> Sex,</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">group =</span> Sex</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">+</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>() <span class="sc">+</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Mean Absorbance Across Frequencies by Gender in 'Lewis_2015' Study"</span>, </span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Frequency"</span>,</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Mean Absorbance"</span>, </span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"Gender"</span>  </span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Sex)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Project4_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="Project4_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Mean Absorbance Across Frequencies for Females"</span>,</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Frequency (Log Scale)"</span>,</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Mean Absorbance"</span></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>$x
-[1] "Frequency (Log Scale)"
-
-$y
-[1] "Mean Absorbance"
-
-$title
-[1] "Mean Absorbance Across Frequencies for Females"
-
-attr(,"class")
-[1] "labels"</code></pre>
-</div>
 </div>
 <p>Description of Plot:</p>
-<p>This plot displays the mean absorbance across a range of frequencies (plotted on a log scale) for female participants. The red line represents how the absorbance changes as frequency increases, starting from around 300 and extending up to approximately 8000. Absorbance increases steadily at lower frequencies, reaching a peak between 1000 and 3000 before declining at higher frequencies.</p>
+<p>This plot displays the mean absorbance across a range of frequencies (plotted on a log scale) for participants, separated by gender through faceting. Each facet represents one gender (“Female,” “Male,” and “Unknown”), showing how mean absorbance changes with frequency for that group. The lines within each facet illustrate the trend for that specific category, starting at frequencies around 300 Hz and extending to approximately 8000 Hz.</p>
+<p>For all categories, absorbance increases steadily at lower frequencies, reaching a peak between 1000 and 3000 Hz before declining at higher frequencies. The inclusion of the “Unknown” category provides additional data but may indicate incomplete or ambiguous information about participant gender. Faceting allows for a clearer comparison of patterns among the different groups, highlighting any similarities or differences in the trends of mean absorbance across the frequency spectrum.</p>
 <p>Description of Code:</p>
 <p>In the code above, I, initially, connected to the WAI database and used SQL queries to extract absorbance data grouped by identifiers, sex, and frequency, applying necessary filters for frequency range and study identifiers. Then, piping in the processed data into R, I visualized it via ggplot. For example, I plotted mean absorbance by frequency on a log scale, distinguishing data by attributes like sex or study identifiers.</p>
 

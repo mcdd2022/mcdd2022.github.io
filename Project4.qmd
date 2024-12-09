@@ -16,7 +16,7 @@ library(RMariaDB)
 library(tidyverse)
 ```
 
-Source of Data: Wideband Acoustic Immittance (WAI) Database hosted by Smith College (doi.org/10.35482/egr.001.2022)
+Source of Data: Ear and Hearing 40(6):p 1481, November/December 2019. | DOI: 10.1097/AUD.0000000000000790
 
 Plan:
 
@@ -37,21 +37,19 @@ Subjects <- tbl(con_wai, "Subjects")
 
 
 ```{sql}
-
 #| connection: con_wai
 
-# Step 1: Explore the structure of the WAI database by listing available tables
-# This provides an overview of the database's components.
+-- Step 1: Explore the structure of the WAI database by listing available tables
+-- This provides an overview of the database's components.
 
 SHOW TABLES;
 ```
 
 ```{sql}
-
 #| connection: con_wai
 
-# Step 2: Preview the first few rows of the 'Measurements' table
-# This allows us to understand the structure and key variables of the dataset.
+-- Step 2: Preview the first few rows of the 'Measurements' table
+-- This allows us to understand the structure and key variables of the dataset.
 
 SELECT *
 FROM Measurements
@@ -59,37 +57,34 @@ LIMIT 0, 5;
 ```
 
 ```{sql}
-
 #| connection: con_wai
 
-# Step 3: Filter detailed information for a specific study (Abur_2014)
-# The 'PI_Info' table contains metadata about studies in the database.
+-- Step 3: Filter detailed information for a specific study (Abur_2014)
+-- The 'PI_Info' table contains metadata about studies in the database.
 
 SELECT * FROM PI_Info 
 WHERE Identifier = "Abur_2014"; 
 ```
 
 ```{sql}
-
 #| connection: con_wai
 
-# Step 4: Filter absorbance measurements for the study 'Abur_2014'
-# This query focuses on analyzing measurement data for the chosen study.
+-- Step 4: Filter absorbance measurements for the study 'Abur_2014'
+-- This query focuses on analyzing measurement data for the chosen study.
 
 SELECT * FROM Measurements 
 WHERE Identifier = "Abur_2014"; 
 ```
 
 ```{sql}
-
 #| connection: con_wai
 #| output.var: "graph"
 
 
-# Step 5: Aggregate mean absorbance across frequencies for selected studies
-# This query filters data for specific studies and calculates mean absorbance 
-# for each frequency within the range 200-8000 Hz.
-# The results will be visualized later to explore absorbance patterns.
+-- Step 5: Aggregate mean absorbance across frequencies for selected studies
+-- This query filters data for specific studies and calculates mean absorbance 
+-- for each frequency within the range 200-8000 Hz.
+-- The results will be visualized later to explore absorbance patterns.
 
 SELECT Identifier, Frequency, LOG10(Frequency) AS log_frequency, AVG(Absorbance) AS mean_absorbance 
 FROM Measurements
@@ -124,12 +119,11 @@ Description of Graph:
 This plot titled "Mean Absorbance Across Frequencies for Various Studies" shows the mean absorbance values across a range of frequencies (plotted on a log scale) for various studies, as identified by the color-coded legend. The graph, where each line represents data from a specific study, depicts how absorbance varies with frequency within the range of 200 to 8000. Overall, the absorbance increases with frequency, reaching a peak between approximately 1000 and 3000 before declining.
 
 ```{sql}
-
 #| connection: con_wai
 
-# Step 7: Join PI_Info and Measurements tables to count unique ears measured
-# This query provides additional context about the dataset by linking study metadata
-# with measurement data and counting distinct subject-ear combinations.
+-- Step 7: Join PI_Info and Measurements tables to count unique ears measured
+-- This query provides additional context about the dataset by linking study metadata
+-- with measurement data and counting distinct subject-ear combinations.
 
 SELECT p.Identifier, p.Year, p.AuthorsShortList, 
  COUNT(DISTINCT SubjectNumber, Ear) AS ear_u
@@ -141,12 +135,11 @@ GROUP BY Identifier, Instrument;
 ```
 
 ```{sql}
-
 #| connection: con_wai
 
-# Step 8: Generate legend strings for studies with metadata and ear counts
-# This query creates formatted legend labels that combine study metadata 
-# (authors, year, sample size, instrument) to be used in visualization.
+-- Step 8: Generate legend strings for studies with metadata and ear counts
+-- This query creates formatted legend labels that combine study metadata 
+-- (authors, year, sample size, instrument) to be used in visualization.
 
 SELECT p.Identifier, Year, AuthorsShortList, 
  COUNT(DISTINCT SubjectNumber, Ear) AS ear_u,
@@ -160,14 +153,13 @@ GROUP BY Identifier, Instrument;
 ```
 
 ```{sql}
-
 #| connection: con_wai
 #| output.var: "graph2"
 
 
-# Step 9: Prepare data for graph visualization
-# This query extends the previous aggregation by including study metadata,
-# calculating mean absorbance across frequencies, and formatting legend labels.
+-- Step 9: Prepare data for graph visualization
+-- This query extends the previous aggregation by including study metadata,
+-- calculating mean absorbance across frequencies, and formatting legend labels.
 
 SELECT p.Identifier, p.Year, p.AuthorsShortList, Frequency,
  LOG10(Frequency) AS log_frequency, AVG(Absorbance) AS mean_absorbance,
@@ -181,31 +173,30 @@ GROUP BY Identifier, Instrument, Frequency;
 ```
 
 ```{sql}
-
 #| connection: con_wai
 
-# Step 10: Explore subject metadata
-# This query lists all entries in the Subjects table to inspect participant information.
+-- Step 10: Explore subject metadata
+-- This query lists all entries in the Subjects table to inspect participant information.
 
 SELECT * 
 FROM Subjects
 ```
 
 ```{sql}
-
 #| connection: con_wai
 #| output.var: "graphforQ2"
 
-# Step 11: Analyze absorbance by sex for a specific study (Lewis_2015)
-# This query calculates mean absorbance for males and females separately 
-# for each frequency within the specified range.
+-- Step 11: Analyze absorbance by sex for a specific study (Lewis_2015)
+-- This query calculates mean absorbance for males and females separately 
+-- for each frequency within the specified range.
 
 SELECT Sex, Frequency, 
     AVG(Absorbance) AS mean_absorbance, m.Identifier
 FROM Subjects AS s
-RIGHT JOIN Measurements AS m ON m.Identifier = s.Identifier 
+RIGHT JOIN Measurements AS m ON m.SubjectNumber = s.SubjectNumber 
 WHERE m.Identifier = "Lewis_2015" AND Frequency > 200 AND Frequency < 8000
 GROUP BY m.Identifier, Frequency, Sex;
+
 ```
 
 ```{r}
@@ -219,8 +210,8 @@ head(graphforQ2)
 
 # Step 13: Visualize absorbance trends for females in the 'Lewis_2015' study
 # This plot focuses on female participants, showing mean absorbance across frequencies.
+
 graphforQ2 |>
-  filter(Sex == "Female") |>
   ggplot(aes(
     x = Frequency,
     y = mean_absorbance,
@@ -230,18 +221,19 @@ graphforQ2 |>
   geom_line() +
   scale_x_log10() +
   labs(
-    title = "Mean Absorbance Across Frequencies for Females", 
+    title = "Mean Absorbance Across Frequencies by Gender in 'Lewis_2015' Study", 
     x = "Frequency",
-    y = "mean_absorbance", 
-    color = "Identifier"  
-  )
-
-
+    y = "Mean Absorbance", 
+    color = "Gender"  
+  ) +
+  facet_wrap(~Sex)  
 ```
 
 Description of Plot:
 
-This plot displays the mean absorbance across a range of frequencies (plotted on a log scale) for female participants. The red line represents how the absorbance changes as frequency increases, starting from around 300 and extending up to approximately 8000. Absorbance increases steadily at lower frequencies, reaching a peak between 1000 and 3000 before declining at higher frequencies.
+This plot displays the mean absorbance across a range of frequencies (plotted on a log scale) for participants, separated by gender through faceting. Each facet represents one gender ("Female," "Male," and "Unknown"), showing how mean absorbance changes with frequency for that group. The lines within each facet illustrate the trend for that specific category, starting at frequencies around 300 Hz and extending to approximately 8000 Hz.
+
+For all categories, absorbance increases steadily at lower frequencies, reaching a peak between 1000 and 3000 Hz before declining at higher frequencies. The inclusion of the "Unknown" category provides additional data but may indicate incomplete or ambiguous information about participant gender. Faceting allows for a clearer comparison of patterns among the different groups, highlighting any similarities or differences in the trends of mean absorbance across the frequency spectrum.
 
 Description of Code:
 
