@@ -22,21 +22,37 @@ Plan:
 
 In this project, I plan to analyze and visualize data from the Wideband Acoustic Immittance (WAI) Database. To do so, I will consider the absorbance measurements across different frequencies for specific identifiers and groups. I will explore patterns in absorbance by using SQL queries, for instance, by grouping data by variables such as sex and frequency. Lastly, using ggplot, I intend to visualize the processed data in SQL to visually represent the explored relationships between variables.
 
+```{r}
+con_wai <- dbConnect(
+  MariaDB(), host = "scidb.smith.edu",
+  user = "waiuser", password = "smith_waiDB", 
+  dbname = "wai"
+)
+Measurements <- tbl(con_wai, "Measurements")
+PI_Info <- tbl(con_wai, "PI_Info")
+Subjects <- tbl(con_wai, "Subjects")
+
+# collect(Measurements)
+```
+
+
 ```{sql}
+
+#| connection: con_wai
 
 # Step 1: Explore the structure of the WAI database by listing available tables
 # This provides an overview of the database's components.
 
-#| connection: con_wai
 SHOW TABLES;
 ```
 
 ```{sql}
 
+#| connection: con_wai
+
 # Step 2: Preview the first few rows of the 'Measurements' table
 # This allows us to understand the structure and key variables of the dataset.
 
-#| connection: con_wai
 SELECT *
 FROM Measurements
 LIMIT 0, 5;
@@ -44,33 +60,37 @@ LIMIT 0, 5;
 
 ```{sql}
 
+#| connection: con_wai
+
 # Step 3: Filter detailed information for a specific study (Abur_2014)
 # The 'PI_Info' table contains metadata about studies in the database.
 
-#| connection: con_wai
 SELECT * FROM PI_Info 
 WHERE Identifier = "Abur_2014"; 
 ```
 
 ```{sql}
 
+#| connection: con_wai
+
 # Step 4: Filter absorbance measurements for the study 'Abur_2014'
 # This query focuses on analyzing measurement data for the chosen study.
 
-#| connection: con_wai
 SELECT * FROM Measurements 
 WHERE Identifier = "Abur_2014"; 
 ```
 
 ```{sql}
 
+#| connection: con_wai
+#| output.var: "graph"
+
+
 # Step 5: Aggregate mean absorbance across frequencies for selected studies
 # This query filters data for specific studies and calculates mean absorbance 
 # for each frequency within the range 200-8000 Hz.
 # The results will be visualized later to explore absorbance patterns.
 
-#| connection: con_wai
-#| output.var: "graph"
 SELECT Identifier, Frequency, LOG10(Frequency) AS log_frequency, AVG(Absorbance) AS mean_absorbance 
 FROM Measurements
 WHERE Identifier IN ("Abur_2014", "Feeney_2017", "Groon_2015" ,"Lewis_2015", "Liu_2008"
@@ -105,12 +125,13 @@ This plot titled "Mean Absorbance Across Frequencies for Various Studies" shows 
 
 ```{sql}
 
+#| connection: con_wai
+
 # Step 7: Join PI_Info and Measurements tables to count unique ears measured
 # This query provides additional context about the dataset by linking study metadata
 # with measurement data and counting distinct subject-ear combinations.
 
-#| connection: con_wai
- SELECT p.Identifier, p.Year, p.AuthorsShortList, 
+SELECT p.Identifier, p.Year, p.AuthorsShortList, 
  COUNT(DISTINCT SubjectNumber, Ear) AS ear_u
 FROM PI_Info AS p 
 LEFT JOIN Measurements AS m ON m.Identifier = p.Identifier 
@@ -121,12 +142,13 @@ GROUP BY Identifier, Instrument;
 
 ```{sql}
 
+#| connection: con_wai
+
 # Step 8: Generate legend strings for studies with metadata and ear counts
 # This query creates formatted legend labels that combine study metadata 
 # (authors, year, sample size, instrument) to be used in visualization.
 
-#| connection: con_wai
- SELECT p.Identifier, Year, AuthorsShortList, 
+SELECT p.Identifier, Year, AuthorsShortList, 
  COUNT(DISTINCT SubjectNumber, Ear) AS ear_u,
  CONCAT(AuthorsShortList, " (" , year, ") ", "N=", COUNT(DISTINCT SubjectNumber, Ear), "; ", Instrument) AS legend
 FROM PI_Info AS p 
@@ -139,13 +161,15 @@ GROUP BY Identifier, Instrument;
 
 ```{sql}
 
+#| connection: con_wai
+#| output.var: "graph2"
+
+
 # Step 9: Prepare data for graph visualization
 # This query extends the previous aggregation by including study metadata,
 # calculating mean absorbance across frequencies, and formatting legend labels.
 
-#| connection: con_wai
-#| output.var: "graph2"
- SELECT p.Identifier, p.Year, p.AuthorsShortList, Frequency,
+SELECT p.Identifier, p.Year, p.AuthorsShortList, Frequency,
  LOG10(Frequency) AS log_frequency, AVG(Absorbance) AS mean_absorbance,
  COUNT(DISTINCT SubjectNumber, Ear) AS ear_u,
  CONCAT(AuthorsShortList, " (" , year, ") ", "N=", COUNT(DISTINCT SubjectNumber, Ear), "; ", Instrument) AS legend
@@ -158,22 +182,24 @@ GROUP BY Identifier, Instrument, Frequency;
 
 ```{sql}
 
+#| connection: con_wai
+
 # Step 10: Explore subject metadata
 # This query lists all entries in the Subjects table to inspect participant information.
 
-#| connection: con_wai
 SELECT * 
 FROM Subjects
 ```
 
 ```{sql}
 
+#| connection: con_wai
+#| output.var: "graphforQ2"
+
 # Step 11: Analyze absorbance by sex for a specific study (Lewis_2015)
 # This query calculates mean absorbance for males and females separately 
 # for each frequency within the specified range.
 
-#| connection: con_wai
-#| output.var: "graphforQ2"
 SELECT Sex, Frequency, 
     AVG(Absorbance) AS mean_absorbance, m.Identifier
 FROM Subjects AS s
