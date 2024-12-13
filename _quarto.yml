@@ -17,7 +17,7 @@ website:
             href: pride.html
       - text: "Text Analysis"
         href: friendsdialogue.html
-      - text:  "Iteration"
+      - text: "Iteration"
         href: Project3.html
       - text: "SQL"
         href: Project4.html

@@ -16,7 +16,7 @@ library(RMariaDB)
 library(tidyverse)
 ```
 
-Source of Data: Ear and Hearing 40(6):p 1481, November/December 2019. | DOI: 10.1097/AUD.0000000000000790
+Source of Data: Ear and Hearing 40(6):p 1481, November/December 2019. \| DOI: 10.1097/AUD.0000000000000790
 
 Plan:
 
@@ -34,7 +34,6 @@ Subjects <- tbl(con_wai, "Subjects")
 
 # collect(Measurements)
 ```
-
 
 ```{sql}
 #| connection: con_wai
