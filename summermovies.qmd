@@ -33,67 +33,9 @@ summer_movies %>% ggplot(aes(x = runtime_minutes, y = average_rating)) +
     title = "Distribution of IMDb Ratings by Movie Runtime"
   )
 ```
-To enhance functionality and usability, making the graph interactive, we can add Shiny to the plot above. 
 
-```{r}
+To enhance functionality and usability, making the graph interactive, we can add Shiny to the plot above.
 
-ui <- fluidPage(
-  titlePanel("Interactive Plot of IMDb Ratings vs. Movie Runtime"),
-  
-  sidebarLayout(
-    sidebarPanel(
-      sliderInput(
-        "runtime_range", 
-        "Select Runtime Range (minutes):",
-        min = summer_movies |> pull(runtime_minutes) |> min(na.rm = TRUE),
-        max = summer_movies |> pull(runtime_minutes) |> max(na.rm = TRUE),
-        value = c(
-          summer_movies |> pull(runtime_minutes) |> min(na.rm = TRUE),
-          summer_movies |> pull(runtime_minutes) |> max(na.rm = TRUE)
-        )
-      ),
-      sliderInput(
-        "rating_range",
-        "Select IMDb Rating Range:",
-        min = summer_movies |> pull(average_rating) |> min(na.rm = TRUE),
-        max = summer_movies |> pull(average_rating) |> max(na.rm = TRUE),
-        value = c(
-          summer_movies |> pull(average_rating) |> min(na.rm = TRUE),
-          summer_movies |> pull(average_rating) |> max(na.rm = TRUE)
-        )
-      )
-    ),
-    
-    mainPanel(
-      plotOutput("scatterPlot")
-    )
-  )
-)
+<iframe width="780" height="500" src="https://mayracoruh.shinyapps.io/Summermovies/" title="some title here" data-external="1">
 
-server <- function(input, output) {
-  filtered_data <- reactive({
-    summer_movies |>
-      filter(
-        runtime_minutes >= input$runtime_range[1],
-        runtime_minutes <= input$runtime_range[2],
-        average_rating >= input$rating_range[1],
-        average_rating <= input$rating_range[2]
-      )
-  })
-  
-  output$scatterPlot <- renderPlot({
-    filtered_data() |>
-      ggplot(aes(x = runtime_minutes, y = average_rating)) +
-      geom_point() +
-      labs(
-        x = "Runtime (minutes)",
-        y = "Average IMDb Rating",
-        title = "Distribution of IMDb Ratings by Movie Runtime"
-      ) +
-      theme_minimal()
-  })
-}
-
-shinyApp(ui = ui, server = server)
-
-```
+</iframe>
